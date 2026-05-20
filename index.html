@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#3b2f2a" />
+    <meta
+      name="description"
+      content="A walking audio guide to the historical sites of Canterbury."
+    />
+    <title>Canterbury Walking Tour</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Canterbury Walking Tour</h1>
+      <p class="tagline">Walk up to a site, tap it, and listen.</p>
+    </header>
+
+    <main>
+      <p id="locStatus" class="loc-status" role="status">Finding your location…</p>
+      <ul id="siteList" class="site-list"></ul>
+    </main>
+
+    <footer class="footer">
+      <p>Audio narration generated with Kokoro TTS. Illustration is original artwork.</p>
+    </footer>
+
+    <script src="sites.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
