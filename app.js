@@ -10,6 +10,7 @@
   const promptDismiss = document.getElementById("arriveDismiss");
 
   const DEFAULT_RADIUS = 40; // metres; "you're here" threshold
+  const TRACE = location.hash.toLowerCase().indexOf("trace") !== -1;
 
   // ---- list cards ----
   const cards = SITES.map(buildCard);
@@ -23,9 +24,10 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
+  let routeLayer = null;
   if (typeof ROUTE !== "undefined" && ROUTE.length > 1) {
-    const route = L.polyline(ROUTE, { color: "#7a5c3e", weight: 5, opacity: 0.85 }).addTo(map);
-    map.fitBounds(route.getBounds(), { padding: [28, 28] });
+    routeLayer = L.polyline(ROUTE, { color: "#7a5c3e", weight: 5, opacity: 0.85, interactive: false }).addTo(map);
+    map.fitBounds(routeLayer.getBounds(), { padding: [28, 28] });
   } else {
     map.setView([51.2794, 1.0826], 15);
   }
@@ -37,10 +39,10 @@
       iconSize: [22, 22],
       iconAnchor: [11, 11],
     });
-    const marker = L.marker([site.lat, site.lng], { icon, title: site.name })
+    const marker = L.marker([site.lat, site.lng], { icon, title: site.name, interactive: !TRACE })
       .addTo(map)
       .bindTooltip(site.name, { direction: "top", offset: [0, -10] });
-    marker.on("click", () => openCard(i, false));
+    if (!TRACE) marker.on("click", () => openCard(i, false));
     return marker;
   });
 
@@ -49,7 +51,7 @@
   // ---- live location + recenter ----
   let liveMarker = null;
   let accuracyCircle = null;
-  let autoCenter = true;
+  let autoCenter = !TRACE;
 
   const Recenter = L.Control.extend({
     options: { position: "bottomright" },
@@ -71,6 +73,7 @@
   map.on("dragstart", () => { autoCenter = false; });
 
   startLocation();
+  if (TRACE) setupTrace();
 
   // ---- arrival prompt ----
   let activePromptId = null;
@@ -260,14 +263,16 @@
     render(entries);
 
     // arrival prompt for the nearest stop within its radius
-    entries.forEach(({ site, dist }) => {
-      if (dist > (site.radius || DEFAULT_RADIUS) * 1.6) prompted.delete(site.id);
-    });
-    const nearest = entries[0];
-    if (nearest && nearest.dist <= (nearest.site.radius || DEFAULT_RADIUS)) {
-      if (!prompted.has(nearest.site.id) && activePromptId !== nearest.site.id) {
-        prompted.add(nearest.site.id);
-        showPrompt(nearest.site);
+    if (!TRACE) {
+      entries.forEach(({ site, dist }) => {
+        if (dist > (site.radius || DEFAULT_RADIUS) * 1.6) prompted.delete(site.id);
+      });
+      const nearest = entries[0];
+      if (nearest && nearest.dist <= (nearest.site.radius || DEFAULT_RADIUS)) {
+        if (!prompted.has(nearest.site.id) && activePromptId !== nearest.site.id) {
+          prompted.add(nearest.site.id);
+          showPrompt(nearest.site);
+        }
       }
     }
   }
@@ -293,5 +298,61 @@
   function formatDistance(m) {
     if (m < 1000) return `${Math.round(m / 10) * 10} m away`;
     return `${(m / 1000).toFixed(1)} km away`;
+  }
+
+  // ---- trace mode (append #trace to the URL): tap the route, copy the coords ----
+  function setupTrace() {
+    if (routeLayer) routeLayer.setStyle({ opacity: 0.3, dashArray: "4 6" });
+    const pts = [];
+    const line = L.polyline([], { color: "#d63b2f", weight: 4, interactive: false }).addTo(map);
+    const dots = L.layerGroup().addTo(map);
+
+    const bar = document.createElement("div");
+    bar.className = "trace-bar";
+    bar.innerHTML =
+      '<span class="trace-bar__msg">Trace mode — tap along the road (corners + a few midpoints). ' +
+      '<b id="traceN">0</b> points</span>';
+    ["Undo", "Clear", "Copy"].forEach((name) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.id = "trace" + name;
+      b.textContent = name;
+      bar.appendChild(b);
+    });
+    document.body.appendChild(bar);
+
+    const out = document.createElement("textarea");
+    out.className = "trace-out";
+    out.readOnly = true;
+    out.hidden = true;
+    document.body.appendChild(out);
+
+    const nEl = bar.querySelector("#traceN");
+    function redraw() {
+      line.setLatLngs(pts);
+      dots.clearLayers();
+      pts.forEach((p) =>
+        L.circleMarker(p, {
+          radius: 4, color: "#d63b2f", weight: 2, fillColor: "#fff", fillOpacity: 1, interactive: false,
+        }).addTo(dots)
+      );
+      nEl.textContent = String(pts.length);
+    }
+
+    map.on("click", (e) => {
+      pts.push([+e.latlng.lat.toFixed(6), +e.latlng.lng.toFixed(6)]);
+      out.hidden = true;
+      redraw();
+    });
+    bar.querySelector("#traceUndo").onclick = () => { pts.pop(); out.hidden = true; redraw(); };
+    bar.querySelector("#traceClear").onclick = () => { pts.length = 0; out.hidden = true; redraw(); };
+    bar.querySelector("#traceCopy").onclick = () => {
+      const body = pts.map((p) => "  [" + p[0] + ", " + p[1] + "]").join(",\n");
+      out.value = "const ROUTE = [\n" + body + ",\n];";
+      out.hidden = false;
+      out.focus();
+      out.select();
+      if (navigator.clipboard) navigator.clipboard.writeText(out.value).catch(() => {});
+    };
   }
 })();
