@@ -3,24 +3,129 @@
 
   const listEl = document.getElementById("siteList");
   const statusEl = document.getElementById("locStatus");
-  const NEAR_METERS = 200;
+  const mapEl = document.getElementById("map");
+  const promptEl = document.getElementById("arrivePrompt");
+  const promptText = document.getElementById("arriveText");
+  const promptListen = document.getElementById("arriveListen");
+  const promptDismiss = document.getElementById("arriveDismiss");
 
+  const DEFAULT_RADIUS = 40; // metres; "you're here" threshold
+
+  // ---- list cards ----
   const cards = SITES.map(buildCard);
   let currentOrder = "";
   render(SITES.map((site, i) => ({ site, card: cards[i], dist: null })));
+
+  // ---- map ----
+  const map = L.map(mapEl, { zoomControl: true });
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  if (typeof ROUTE !== "undefined" && ROUTE.length > 1) {
+    const route = L.polyline(ROUTE, { color: "#7a5c3e", weight: 5, opacity: 0.85 }).addTo(map);
+    map.fitBounds(route.getBounds(), { padding: [28, 28] });
+  } else {
+    map.setView([51.2794, 1.0826], 15);
+  }
+
+  const stopMarkers = SITES.map((site, i) => {
+    const icon = L.divIcon({
+      className: "stop-pin",
+      html: '<span class="stop-pin__dot"></span>',
+      iconSize: [22, 22],
+      iconAnchor: [11, 11],
+    });
+    const marker = L.marker([site.lat, site.lng], { icon, title: site.name })
+      .addTo(map)
+      .bindTooltip(site.name, { direction: "top", offset: [0, -10] });
+    marker.on("click", () => openCard(i, false));
+    return marker;
+  });
+
+  setTimeout(() => map.invalidateSize(), 200);
+
+  // ---- live location + recenter ----
+  let liveMarker = null;
+  let accuracyCircle = null;
+  let autoCenter = true;
+
+  const Recenter = L.Control.extend({
+    options: { position: "bottomright" },
+    onAdd: function () {
+      const btn = L.DomUtil.create("button", "recenter-btn");
+      btn.type = "button";
+      btn.innerHTML = "◎";
+      btn.title = "Recentre on me";
+      btn.setAttribute("aria-label", "Recentre on my location");
+      L.DomEvent.disableClickPropagation(btn);
+      L.DomEvent.on(btn, "click", () => {
+        autoCenter = true;
+        if (liveMarker) map.setView(liveMarker.getLatLng(), Math.max(map.getZoom(), 16));
+      });
+      return btn;
+    },
+  });
+  map.addControl(new Recenter());
+  map.on("dragstart", () => { autoCenter = false; });
+
   startLocation();
 
+  // ---- arrival prompt ----
+  let activePromptId = null;
+  const prompted = new Set();
+
+  promptDismiss.addEventListener("click", hidePrompt);
+  promptListen.addEventListener("click", () => {
+    const i = SITES.findIndex((s) => s.id === activePromptId);
+    hidePrompt();
+    if (i >= 0) openCard(i, true);
+  });
+
+  function showPrompt(site) {
+    activePromptId = site.id;
+    promptText.textContent = "You’re at " + site.name;
+    promptEl.hidden = false;
+  }
+
+  function hidePrompt() {
+    promptEl.hidden = true;
+    activePromptId = null;
+  }
+
+  // ---- open a card (scroll into view, optionally play) ----
+  function openCard(index, play) {
+    const card = cards[index];
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    card.classList.add("is-focused");
+    setTimeout(() => card.classList.remove("is-focused"), 2200);
+    if (play) {
+      const audio = card.querySelector("audio");
+      if (audio) audio.play().catch(() => {});
+    }
+  }
+
+  // ---- cards ----
   function buildCard(site) {
     const li = document.createElement("li");
     li.className = "card";
 
     const media = document.createElement("div");
     media.className = "card__media";
-    const img = document.createElement("img");
-    img.src = site.image;
-    img.alt = site.name;
-    img.loading = "lazy";
-    media.appendChild(img);
+    if (site.image) {
+      const img = document.createElement("img");
+      img.src = site.image;
+      img.alt = site.name;
+      img.loading = "lazy";
+      media.appendChild(img);
+    } else {
+      media.classList.add("card__media--plain");
+      const label = document.createElement("span");
+      label.className = "card__media-label";
+      label.textContent = site.name;
+      media.appendChild(label);
+    }
 
     const dist = document.createElement("span");
     dist.className = "card__distance";
@@ -93,6 +198,7 @@
     listEl.replaceChildren(...entries.map((e) => e.card));
   }
 
+  // ---- geolocation ----
   function startLocation() {
     if (!("geolocation" in navigator)) {
       statusEl.textContent =
@@ -107,7 +213,34 @@
   }
 
   function onPosition(pos) {
-    const { latitude, longitude } = pos.coords;
+    const { latitude, longitude, accuracy } = pos.coords;
+    const here = [latitude, longitude];
+
+    if (!liveMarker) {
+      liveMarker = L.marker(here, {
+        icon: L.divIcon({
+          className: "live-dot",
+          html: '<span class="live-dot__core"></span>',
+          iconSize: [18, 18],
+          iconAnchor: [9, 9],
+        }),
+        interactive: false,
+        keyboard: false,
+        zIndexOffset: 1000,
+      }).addTo(map);
+      accuracyCircle = L.circle(here, {
+        radius: accuracy || 0,
+        className: "accuracy-circle",
+        stroke: false,
+        fillOpacity: 0.12,
+      }).addTo(map);
+      if (autoCenter) map.setView(here, Math.max(map.getZoom(), 16));
+    } else {
+      liveMarker.setLatLng(here);
+      accuracyCircle.setLatLng(here).setRadius(accuracy || 0);
+      if (autoCenter) map.panTo(here);
+    }
+
     const entries = SITES.map((site, i) => ({
       site,
       card: cards[i],
@@ -115,16 +248,28 @@
     }));
     entries.sort((a, b) => a.dist - b.dist);
 
-    entries.forEach(({ card, dist }) => {
+    entries.forEach(({ site, card, dist }) => {
       const el = card._distEl;
       el.hidden = false;
-      const near = dist <= NEAR_METERS;
+      const near = dist <= (site.radius || DEFAULT_RADIUS);
       el.textContent = near ? "You’re here" : formatDistance(dist);
       el.classList.toggle("is-near", near);
     });
 
     statusEl.textContent = "Sorted by nearest — walk up to a site and press play.";
     render(entries);
+
+    // arrival prompt for the nearest stop within its radius
+    entries.forEach(({ site, dist }) => {
+      if (dist > (site.radius || DEFAULT_RADIUS) * 1.6) prompted.delete(site.id);
+    });
+    const nearest = entries[0];
+    if (nearest && nearest.dist <= (nearest.site.radius || DEFAULT_RADIUS)) {
+      if (!prompted.has(nearest.site.id) && activePromptId !== nearest.site.id) {
+        prompted.add(nearest.site.id);
+        showPrompt(nearest.site);
+      }
+    }
   }
 
   function onError(err) {

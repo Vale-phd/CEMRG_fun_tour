@@ -161,3 +161,135 @@ main {
   font-size: 0.78rem;
   text-align: center;
 }
+
+/* ---- map ---- */
+.map {
+  width: 100%;
+  height: 52vh;
+  min-height: 280px;
+  background: var(--accent-soft);
+  z-index: 0;
+}
+
+.stop-pin__dot {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(45, 38, 34, 0.5);
+}
+
+.live-dot__core {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1a73e8;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 rgba(26, 115, 232, 0.5);
+  animation: live-pulse 2s ease-out infinite;
+}
+
+@keyframes live-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.5); }
+  70% { box-shadow: 0 0 0 14px rgba(26, 115, 232, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); }
+}
+
+.accuracy-circle {
+  fill: #1a73e8;
+}
+
+.recenter-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 1.3rem;
+  line-height: 1;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--accent);
+  box-shadow: 0 1px 4px rgba(45, 38, 34, 0.35);
+  cursor: pointer;
+}
+
+/* ---- arrival prompt ---- */
+.arrive {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 1rem);
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: calc(100% - 2rem);
+  max-width: 460px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.8rem 0.7rem 1.1rem;
+  background: linear-gradient(160deg, #4a3a2c, #2f2620);
+  color: #f6efe2;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(45, 38, 34, 0.4);
+}
+
+.arrive[hidden] {
+  display: none;
+}
+
+.arrive__text {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.arrive__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.arrive__listen {
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.4rem 1.1rem;
+  border: none;
+  border-radius: 999px;
+  background: #f6efe2;
+  color: #2f2620;
+  cursor: pointer;
+}
+
+.arrive__dismiss {
+  font: inherit;
+  font-size: 1.4rem;
+  line-height: 1;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #f6efe2;
+  cursor: pointer;
+}
+
+/* ---- image-less card ---- */
+.card__media--plain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--accent-soft), #e4d6c2);
+}
+
+.card__media-label {
+  font-size: 1.35rem;
+  color: var(--accent);
+  opacity: 0.85;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.card.is-focused {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}

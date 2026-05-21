@@ -9,6 +9,7 @@
       content="A walking audio guide to the historical sites of Canterbury."
     />
     <title>Canterbury Walking Tour</title>
+    <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -17,15 +18,26 @@
       <p class="tagline">Walk up to a site, tap it, and listen.</p>
     </header>
 
+    <div id="map" class="map" role="application" aria-label="Map of the walking tour"></div>
+
     <main>
       <p id="locStatus" class="loc-status" role="status">Finding your location…</p>
       <ul id="siteList" class="site-list"></ul>
     </main>
 
     <footer class="footer">
-      <p>Audio narration generated with Kokoro TTS. Illustration is original artwork.</p>
+      <p>Audio narration generated with Kokoro TTS. Map data &copy; OpenStreetMap contributors.</p>
     </footer>
 
+    <div id="arrivePrompt" class="arrive" hidden role="alert">
+      <span id="arriveText" class="arrive__text"></span>
+      <span class="arrive__actions">
+        <button id="arriveListen" type="button" class="arrive__listen">Listen</button>
+        <button id="arriveDismiss" type="button" class="arrive__dismiss" aria-label="Dismiss">&times;</button>
+      </span>
+    </div>
+
+    <script src="vendor/leaflet/leaflet.js"></script>
     <script src="sites.js"></script>
     <script src="app.js"></script>
   </body>
