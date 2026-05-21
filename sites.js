@@ -66,6 +66,10 @@ const SITES = [
     lng: 1.086257,
     blurb:
       "Statues of the 6th-century Kentish king and his Frankish Christian queen, who received St Augustine's mission.",
+    audio: [
+      { label: "George", file: "assets/audio/queen-bertha-king-ethelbert.mp3" },
+      { label: "Emma", file: "assets/audio/queen-bertha-king-ethelbert-emma.mp3" },
+    ],
   },
   {
     id: "city-walls",
@@ -74,6 +78,10 @@ const SITES = [
     lng: 1.085721,
     blurb:
       "Medieval walls on the line of the Roman circuit, still ringing much of the old city.",
+    audio: [
+      { label: "George", file: "assets/audio/city-walls.mp3" },
+      { label: "Emma", file: "assets/audio/city-walls-emma.mp3" },
+    ],
   },
   {
     id: "marlowe-theatre",
@@ -82,6 +90,10 @@ const SITES = [
     lng: 1.078548,
     blurb:
       "Canterbury's riverside theatre, named after the playwright Christopher Marlowe, born in the city in 1564.",
+    audio: [
+      { label: "George", file: "assets/audio/marlowe-theatre.mp3" },
+      { label: "Emma", file: "assets/audio/marlowe-theatre-emma.mp3" },
+    ],
   },
   {
     id: "sollys-orchard",
@@ -89,6 +101,10 @@ const SITES = [
     lat: 51.28188,
     lng: 1.079155,
     blurb: "A quiet green corner beside the Great Stour, just off the riverside path.",
+    audio: [
+      { label: "George", file: "assets/audio/sollys-orchard.mp3" },
+      { label: "Emma", file: "assets/audio/sollys-orchard-emma.mp3" },
+    ],
   },
   {
     id: "westgate-towers",
@@ -109,6 +125,10 @@ const SITES = [
     lat: 51.281306,
     lng: 1.074772,
     blurb: "Boarding point for guided rowing-boat trips along the Great Stour.",
+    audio: [
+      { label: "George", file: "assets/audio/river-tours.mp3" },
+      { label: "Emma", file: "assets/audio/river-tours-emma.mp3" },
+    ],
   },
   {
     id: "westgate-gardens",
@@ -117,6 +137,10 @@ const SITES = [
     lng: 1.073635,
     blurb:
       "Riverside public gardens along the Great Stour beneath the old city wall.",
+    audio: [
+      { label: "George", file: "assets/audio/westgate-gardens.mp3" },
+      { label: "Emma", file: "assets/audio/westgate-gardens-emma.mp3" },
+    ],
   },
   {
     id: "greyfriars-chapel",
@@ -124,6 +148,10 @@ const SITES = [
     lat: 51.278959,
     lng: 1.076746,
     blurb: "Built over the Stour around 1267 — the first Franciscan friary in England.",
+    audio: [
+      { label: "George", file: "assets/audio/greyfriars-chapel.mp3" },
+      { label: "Emma", file: "assets/audio/greyfriars-chapel-emma.mp3" },
+    ],
   },
   {
     id: "the-beaney",
@@ -132,6 +160,10 @@ const SITES = [
     lng: 1.079203,
     blurb:
       "The Beaney House of Art and Knowledge: the city's museum, gallery and library.",
+    audio: [
+      { label: "George", file: "assets/audio/the-beaney.mp3" },
+      { label: "Emma", file: "assets/audio/the-beaney-emma.mp3" },
+    ],
   },
   {
     id: "canterbury-cathedral",
@@ -154,6 +186,10 @@ const SITES = [
     lng: 1.081357,
     blurb:
       "The city war memorial at the Buttermarket, before the cathedral's Christchurch Gate.",
+    audio: [
+      { label: "George", file: "assets/audio/war-memorial.mp3" },
+      { label: "Emma", file: "assets/audio/war-memorial-emma.mp3" },
+    ],
   },
   {
     id: "roman-museum",
@@ -162,6 +198,10 @@ const SITES = [
     lng: 1.081469,
     blurb:
       "An underground museum built around an in-situ Roman mosaic and hypocaust.",
+    audio: [
+      { label: "George", file: "assets/audio/roman-museum.mp3" },
+      { label: "Emma", file: "assets/audio/roman-museum-emma.mp3" },
+    ],
   },
   {
     id: "st-georges-tower",
@@ -170,6 +210,10 @@ const SITES = [
     lng: 1.082781,
     blurb:
       "The lone tower of St George's Church, where Christopher Marlowe was baptised in 1564.",
+    audio: [
+      { label: "George", file: "assets/audio/st-georges-tower.mp3" },
+      { label: "Emma", file: "assets/audio/st-georges-tower-emma.mp3" },
+    ],
   },
 ];
 
