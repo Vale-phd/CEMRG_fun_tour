@@ -16,6 +16,8 @@
  *   blurb   one-line summary shown on the card
  *   image   optional path to an image; omit for a plain card
  *   audio   array of voice options; the first is played by default
+ *   song    optional { title, file } theme song; the player shows on a card
+ *           only once its MP3 exists (generate with ACE-Step — see SPEC.md)
  */
 const SITES = [
   {
@@ -31,6 +33,10 @@ const SITES = [
       { label: "George", file: "assets/audio/canterbury-cathedral.mp3" },
       { label: "Emma", file: "assets/audio/canterbury-cathedral-emma.mp3" },
     ],
+    song: {
+      title: "Ever the Same",
+      file: "assets/audio/songs/canterbury-cathedral.mp3",
+    },
   },
   {
     id: "fyndons-gate",
@@ -44,6 +50,10 @@ const SITES = [
       { label: "George", file: "assets/audio/fyndons-gate.mp3" },
       { label: "Emma", file: "assets/audio/fyndons-gate-emma.mp3" },
     ],
+    song: {
+      title: "The Great Gate",
+      file: "assets/audio/songs/fyndons-gate.mp3",
+    },
   },
   {
     id: "st-augustines-abbey",
@@ -57,6 +67,10 @@ const SITES = [
       { label: "George", file: "assets/audio/st-augustines-abbey.mp3" },
       { label: "Emma", file: "assets/audio/st-augustines-abbey-emma.mp3" },
     ],
+    song: {
+      title: "The Sleeping Stones",
+      file: "assets/audio/songs/st-augustines-abbey.mp3",
+    },
   },
   {
     id: "st-martins-church",
@@ -70,6 +84,10 @@ const SITES = [
       { label: "George", file: "assets/audio/st-martins-church.mp3" },
       { label: "Emma", file: "assets/audio/st-martins-church-emma.mp3" },
     ],
+    song: {
+      title: "Where It Began",
+      file: "assets/audio/songs/st-martins-church.mp3",
+    },
   },
   {
     id: "westgate-towers",
@@ -83,6 +101,10 @@ const SITES = [
       { label: "George", file: "assets/audio/westgate-towers.mp3" },
       { label: "Emma", file: "assets/audio/westgate-towers-emma.mp3" },
     ],
+    song: {
+      title: "Through the Westgate",
+      file: "assets/audio/songs/westgate-towers.mp3",
+    },
   },
 ];
 

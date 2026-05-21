@@ -1,0 +1,5 @@
+# Generated theme songs go here, one MP3 per site, named to match the site id:
+#   canterbury-cathedral.mp3, fyndons-gate.mp3, st-augustines-abbey.mp3,
+#   st-martins-church.mp3, westgate-towers.mp3
+# Generate them with ACE-Step from content/songs/<id>.txt — see SPEC.md
+# "Song pipeline". The app shows a song player on a card only once its MP3 exists.

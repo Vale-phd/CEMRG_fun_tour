@@ -1,0 +1,40 @@
+# Theme song — Westgate Towers
+# Input for ACE-Step 1.5 (see SPEC.md "Song pipeline"). In the acestep UI,
+# paste the CAPTION into the tags/style box and everything under LYRICS into
+# the lyrics box; set length to DURATION. Edit freely, then regenerate.
+
+CAPTION:
+sturdy marching English folk ballad, driving bodhran drum, fiddle, lute, strong male lead with crowd backing vocals, lively, 104 bpm
+
+DURATION: 100
+
+LYRICS:
+[Intro]
+Hey! Through the Westgate we go
+
+[Verse 1]
+Sixty feet of ragstone grey,
+Sudbury's towers guard the way.
+Yevele's hand, the portcullis fall,
+The largest gate of them all.
+
+[Chorus]
+Through the Westgate, through the gate,
+Pilgrims early, pilgrims late.
+Down from London the long road ran,
+Into the city, every man.
+
+[Verse 2]
+Holes for cannon, holes for guns,
+First to face the powder runs.
+Then a gaol with a cold stone cell,
+Many a tale these towers tell.
+
+[Chorus]
+Through the Westgate, through the gate,
+Pilgrims early, pilgrims late.
+Down from London the long road ran,
+Into the city, every man.
+
+[Outro]
+Through the Westgate, in we go.

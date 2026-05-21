@@ -32,6 +32,8 @@ way, and exactly how to extend it.
   (George / Emma).
 - Everything is structured so adding the rest of the walk is data entry plus an
   audio-generation step (see §9).
+- **Theme songs** are an optional per-site layer — lyrics live in
+  `content/songs/`, and the sung MP3s are generated with ACE-Step (see §7.5).
 
 ## 4. Architecture & rationale
 
@@ -57,11 +59,15 @@ way, and exactly how to extend it.
 ├── app.js                         # rendering, geolocation sort, voice switch
 ├── sites.js                       # TOUR DATA (the SITES array)  ← edit this
 ├── content/
-│   └── canterbury-cathedral.txt   # narration script (TTS input, 1 per site)
+│   ├── canterbury-cathedral.txt   # narration script (TTS input, 1 per site)
+│   └── songs/
+│       └── canterbury-cathedral.txt        # song caption + lyrics (1 per site)
 ├── assets/
 │   ├── audio/                     # generated MP3s (committed)
 │   │   ├── canterbury-cathedral.mp3        # default voice (George)
-│   │   └── canterbury-cathedral-emma.mp3   # alternate voice (Emma)
+│   │   ├── canterbury-cathedral-emma.mp3   # alternate voice (Emma)
+│   │   └── songs/
+│   │       └── canterbury-cathedral.mp3    # theme song (ACE-Step), 1 per site
 │   └── images/
 │       └── canterbury-cathedral.svg        # illustration
 ├── tools/
@@ -87,6 +93,7 @@ Each site object:
 | `blurb` | string   | one-line summary on the card                                 |
 | `image` | string   | path to a photo or illustration                             |
 | `audio` | array    | one or more `{ label, file }`; the **first is the default** played |
+| `song`  | object   | optional `{ title, file }` theme song; player shows once its MP3 exists (§7.5) |
 
 ## 7. Audio pipeline
 
@@ -129,6 +136,70 @@ British options used: `bm_george` (default) and `bf_emma`. Other British voices
 in Kokoro include `bf_alice`, `bf_isabella`, `bf_lily`, `bm_daniel`, `bm_fable`,
 `bm_lewis`. Change the list, rerun, update the `audio` array in `sites.js`.
 
+## 7.5 Song pipeline — per-site theme songs
+
+Each site can also carry a short **theme song**: an original, sung piece about
+that place, shown by a second player on the card (under the narration).
+
+**Engine:** [ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5) — an open
+(Apache-2.0) music-generation foundation model that turns a *style caption* plus
+*lyrics* into a full song **with vocals**. Kokoro is a text-to-*speech* engine
+and cannot sing, so it is not used for songs; see Decision Log (§13).
+
+**Where songs are generated (and why not on the build box):** unlike Kokoro
+(whose weights are on GitHub releases, reachable here), ACE-Step's weights live
+on Hugging Face / ModelScope — both blocked by this repo's build network policy
+— and it wants a GPU. So songs are generated **once, on a capable machine**, and
+only the resulting MP3s are committed. This mirrors how the Kokoro model files
+are downloaded rather than committed (§7). An Apple-Silicon Mac (Metal, ~16 GB+
+unified memory) handles ACE-Step comfortably.
+
+**Inputs — `content/songs/<id>.txt`:** one file per site, holding the caption
+and lyrics:
+
+```
+CAPTION:
+<style/genre tags, instruments, voice, mood, tempo — one line>
+
+DURATION: 100
+
+LYRICS:
+[Intro]
+...
+[Verse 1] / [Chorus] / [Bridge] / [Outro]   (~6–10 syllables per line)
+```
+
+**Generate on a Mac — option A (official ACE-Step, simplest):**
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+git clone https://github.com/ACE-Step/ACE-Step-1.5.git
+cd ACE-Step-1.5 && uv sync
+uv run acestep            # Gradio UI at http://localhost:7860; models auto-download
+```
+
+Then for each site: paste `CAPTION` into the style/tags box and the `LYRICS`
+block into the lyrics box, set the length to `DURATION`, generate, and **save
+the MP3 as `assets/audio/songs/<id>.mp3`** (the filename must match the site
+`id`).
+
+**Option B — `acestep.cpp` (lighter/faster on Mac, quantized ~7.7 GB):**
+
+```bash
+git clone --recurse-submodules https://github.com/ServeurpersoCom/acestep.cpp.git
+cd acestep.cpp && ./buildcpu.sh   # macOS auto-enables Metal + Accelerate BLAS
+./models.sh                       # downloads the GGUF weights
+./server.sh                       # web UI at http://localhost:8085
+```
+
+**Scripting it:** ACE-Step also exposes a Python API
+(`acestep.inference.generate_music`) and a REST server (`uv run acestep-api`,
+`http://localhost:8001`); see ACE-Step's `docs/en/INFERENCE.md` to batch all five
+spec files in one run instead of pasting by hand.
+
+The card's song player appears **automatically once the MP3 exists** — until
+then it hides itself, so the app is fine to ship before every song is made.
+
 ## 8. Images / illustration policy
 
 - v1 uses an **original SVG illustration** of the cathedral
@@ -149,10 +220,12 @@ in Kokoro include `bf_alice`, `bf_isabella`, `bf_lily`, `bm_daniel`, `bm_fable`,
 2. Write the narration in `content/westgate-towers.txt` (plain text; blank lines
    separate paragraphs and create slightly longer pauses).
 3. Run `python3 tools/generate_audio.py westgate-towers` → produces the MP3(s).
-4. Add an image to `assets/images/` (illustration or a properly-licensed photo).
-5. Append a block to `SITES` in `sites.js` with the coordinates, blurb, image
-   path, and the `audio` array.
-6. Serve locally (§10) and check it; commit and push.
+4. *(Optional)* Write `content/songs/westgate-towers.txt` and generate
+   `assets/audio/songs/westgate-towers.mp3` with ACE-Step (§7.5).
+5. Add an image to `assets/images/` (illustration or a properly-licensed photo).
+6. Append a block to `SITES` in `sites.js` with the coordinates, blurb, image
+   path, the `audio` array, and (if made) the `song` object.
+7. Serve locally (§10) and check it; commit and push.
 
 ## 10. Local development
 
@@ -199,6 +272,16 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
 - **Two voices shipped.** The original ask was to compare TTS *engines*; with
   Piper blocked we instead ship two Kokoro British voices so the narrator can be
   chosen by ear.
+- **Songs = ACE-Step, generated off the build box.** Per-site theme songs need a
+  model that actually *sings*; Kokoro (TTS) can't. Magenta was the only music
+  model both reachable and runnable inside this build environment — its
+  checkpoints are on Google Cloud Storage (not the blocked Hugging Face) and it
+  runs on CPU — but it composes instrumental/symbolic music with no vocals, so it
+  missed the "song" bar. HeartMuLa was rejected too (CUDA-only, ~2× RTX 4090, no
+  CPU/quantised build). ACE-Step 1.5 sings and runs on an Apple-Silicon Mac, but
+  its weights are on Hugging Face/ModelScope (blocked here) and it wants a GPU —
+  so songs are generated once on a capable machine and the MP3s committed, just
+  as the Kokoro model files are downloaded rather than committed.
 - **Data inline in `sites.js`, not fetched JSON.** Avoids `fetch`/CORS issues
   and works from `file://`; simpler for a tiny dataset.
 - **Online-only in v1.** Simplicity first; offline is a known future step.

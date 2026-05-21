@@ -1,0 +1,34 @@
+# Theme song — St Augustine's Abbey
+# Input for ACE-Step 1.5 (see SPEC.md "Song pipeline"). In the acestep UI,
+# paste the CAPTION into the tags/style box and everything under LYRICS into
+# the lyrics box; set length to DURATION. Edit freely, then regenerate.
+
+CAPTION:
+elegiac English folk lament, solo viol, soft harp, distant wordless choir, gentle female alto, slow and mournful, airy reverb, 64 bpm
+
+DURATION: 100
+
+LYRICS:
+[Intro]
+Grass over the fallen nave
+
+[Verse 1]
+Here a monastery rose,
+Where the kings of Kent repose.
+Aethelberht and Bertha lie,
+Under a wide and quiet sky.
+
+[Chorus]
+Sing low for the sleeping stones,
+For buried kings and their hollow thrones.
+A thousand years of bell and prayer,
+Now only wind in the open air.
+
+[Verse 2]
+Monks once copied light to page,
+Kept the lamp through a darker age.
+Then came the king and the breaking hand,
+Down came the towers across the land.
+
+[Outro]
+Foundations hold the story still.

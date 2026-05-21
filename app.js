@@ -158,6 +158,10 @@
       body.appendChild(buildVoiceSwitcher(site, audio));
     }
     body.appendChild(audio);
+
+    if (site.song && site.song.file) {
+      body.appendChild(buildSong(site.song));
+    }
     li.appendChild(body);
 
     li._distEl = dist;
@@ -191,6 +195,28 @@
       });
       wrap.appendChild(btn);
     });
+    return wrap;
+  }
+
+  // Per-site theme song. The MP3s are generated separately with ACE-Step (see
+  // SPEC.md "Song pipeline"), so on any card whose song isn't there yet, the
+  // player hides itself when the source fails to load.
+  function buildSong(song) {
+    const wrap = document.createElement("div");
+    wrap.className = "song";
+
+    const label = document.createElement("span");
+    label.className = "song__label";
+    label.textContent = song.title ? "Song · " + song.title : "Theme song";
+    wrap.appendChild(label);
+
+    const audio = document.createElement("audio");
+    audio.controls = true;
+    audio.preload = "metadata";
+    audio.className = "song__audio";
+    audio.src = song.file;
+    audio.addEventListener("error", () => wrap.remove());
+    wrap.appendChild(audio);
     return wrap;
   }
 

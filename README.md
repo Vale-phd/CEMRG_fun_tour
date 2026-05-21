@@ -20,11 +20,15 @@ See [`SPEC.md`](SPEC.md) §7 (audio pipeline) and §9 (adding a site). In short:
 write `content/<id>.txt`, run `python3 tools/generate_audio.py <id>`, add an
 image, and append an entry to `SITES` in `sites.js`.
 
+Optional per-site **theme songs** are generated separately with ACE-Step (it
+sings; Kokoro can't) — see [`SPEC.md`](SPEC.md) §7.5.
+
 ## Layout
 
 - `index.html`, `styles.css`, `app.js` — the page
 - `sites.js` — the tour data (edit this to add sites)
 - `content/` — narration scripts (TTS input)
+- `content/songs/` — theme-song lyrics + captions (ACE-Step input)
 - `assets/` — generated audio + images
 - `tools/generate_audio.py` — text-to-speech generator
 - `SPEC.md` — full design + build guide
