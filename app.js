@@ -11,6 +11,7 @@
 
   const DEFAULT_RADIUS = 40; // metres; "you're here" threshold
   const TRACE = location.hash.toLowerCase().indexOf("trace") !== -1;
+  const POI = location.hash.toLowerCase().indexOf("poi") !== -1;
 
   // ---- list cards ----
   const cards = SITES.map(buildCard);
@@ -32,7 +33,7 @@
     map.setView([51.2794, 1.0826], 15);
   }
 
-  const stopMarkers = SITES.map((site, i) => {
+  const stopMarkers = POI ? [] : SITES.map((site, i) => {
     const icon = L.divIcon({
       className: "stop-pin",
       html: '<span class="stop-pin__dot"></span>',
@@ -51,7 +52,7 @@
   // ---- live location + recenter ----
   let liveMarker = null;
   let accuracyCircle = null;
-  let autoCenter = !TRACE;
+  let autoCenter = !(TRACE || POI);
 
   const Recenter = L.Control.extend({
     options: { position: "bottomright" },
@@ -73,7 +74,8 @@
   map.on("dragstart", () => { autoCenter = false; });
 
   startLocation();
-  if (TRACE) setupTrace();
+  if (POI) setupPoi();
+  else if (TRACE) setupTrace();
 
   // ---- arrival prompt ----
   let activePromptId = null;
@@ -263,7 +265,7 @@
     render(entries);
 
     // arrival prompt for the nearest stop within its radius
-    if (!TRACE) {
+    if (!TRACE && !POI) {
       entries.forEach(({ site, dist }) => {
         if (dist > (site.radius || DEFAULT_RADIUS) * 1.6) prompted.delete(site.id);
       });
@@ -354,5 +356,107 @@
       out.select();
       if (navigator.clipboard) navigator.clipboard.writeText(out.value).catch(() => {});
     };
+  }
+
+  // ---- stop-placement mode (append #poi to the URL): tap each POI in order ----
+  function setupPoi() {
+    const NAMES = [
+      "St Martin's Church",
+      "St Augustine's Abbey",
+      "Fyndon's Gate",
+      "Queen Bertha & King Ethelbert",
+      "City Walls",
+      "Solly's Orchard",
+      "The Marlowe Theatre",
+      "Westgate Towers",
+      "River Tours",
+      "Westgate Gardens",
+      "Greyfriars Chapel",
+      "The Beaney",
+      "Roman Museum",
+      "Canterbury Cathedral (Christchurch Gate)",
+      "War Memorial",
+      "St George's Tower",
+    ];
+    const placed = []; // { name, latlng, ni }
+    let nameIdx = 0;
+    const layer = L.layerGroup().addTo(map);
+
+    const bar = document.createElement("div");
+    bar.className = "trace-bar";
+    const msg = document.createElement("span");
+    msg.className = "trace-bar__msg";
+    bar.appendChild(msg);
+    ["Skip", "Undo", "Clear", "Copy"].forEach((name) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.id = "poi" + name;
+      b.textContent = name;
+      bar.appendChild(b);
+    });
+    document.body.appendChild(bar);
+
+    const out = document.createElement("textarea");
+    out.className = "trace-out";
+    out.readOnly = true;
+    out.hidden = true;
+    document.body.appendChild(out);
+
+    function poiIcon(n) {
+      return L.divIcon({
+        className: "poi-pin",
+        html: '<span class="poi-pin__n">' + n + "</span>",
+        iconSize: [26, 26],
+        iconAnchor: [13, 13],
+      });
+    }
+    function redraw() {
+      layer.clearLayers();
+      placed.forEach((p, i) =>
+        L.marker(p.latlng, { icon: poiIcon(i + 1), interactive: false })
+          .addTo(layer)
+          .bindTooltip(p.name, { permanent: false, direction: "top", offset: [0, -12] })
+      );
+      msg.textContent =
+        nameIdx < NAMES.length
+          ? "Next (#" + (placed.length + 1) + "): " + NAMES[nameIdx] + " — tap its spot.  " + placed.length + " placed."
+          : "Done — " + placed.length + " placed. Tap Copy, then paste it to me.";
+    }
+
+    map.on("click", (e) => {
+      if (nameIdx >= NAMES.length) return;
+      placed.push({ name: NAMES[nameIdx], latlng: e.latlng, ni: nameIdx });
+      nameIdx += 1;
+      out.hidden = true;
+      redraw();
+    });
+    bar.querySelector("#poiSkip").onclick = () => {
+      if (nameIdx < NAMES.length) nameIdx += 1;
+      out.hidden = true;
+      redraw();
+    };
+    bar.querySelector("#poiUndo").onclick = () => {
+      const p = placed.pop();
+      if (p) nameIdx = p.ni;
+      out.hidden = true;
+      redraw();
+    };
+    bar.querySelector("#poiClear").onclick = () => {
+      placed.length = 0;
+      nameIdx = 0;
+      out.hidden = true;
+      redraw();
+    };
+    bar.querySelector("#poiCopy").onclick = () => {
+      out.value = placed
+        .map((p, i) => (i + 1) + "\t" + p.name + "\t[" + p.latlng.lat.toFixed(6) + ", " + p.latlng.lng.toFixed(6) + "]")
+        .join("\n");
+      out.hidden = false;
+      out.focus();
+      out.select();
+      if (navigator.clipboard) navigator.clipboard.writeText(out.value).catch(() => {});
+    };
+
+    redraw();
   }
 })();

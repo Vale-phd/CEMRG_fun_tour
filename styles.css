@@ -341,3 +341,17 @@ main {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 0.78rem;
 }
+
+.poi-pin__n {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font: 700 13px/1 "Iowan Old Style", Georgia, serif;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(45, 38, 34, 0.5);
+}
