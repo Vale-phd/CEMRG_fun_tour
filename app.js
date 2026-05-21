@@ -34,15 +34,16 @@
   }
 
   const stopMarkers = POI ? [] : SITES.map((site, i) => {
+    const hasAudio = !!(site.audio && site.audio.length);
     const icon = L.divIcon({
       className: "stop-pin",
-      html: '<span class="stop-pin__dot"></span>',
-      iconSize: [22, 22],
-      iconAnchor: [11, 11],
+      html: '<span class="stop-pin__n' + (hasAudio ? "" : " stop-pin__n--mute") + '">' + (i + 1) + "</span>",
+      iconSize: [26, 26],
+      iconAnchor: [13, 13],
     });
     const marker = L.marker([site.lat, site.lng], { icon, title: site.name, interactive: !TRACE })
       .addTo(map)
-      .bindTooltip(site.name, { direction: "top", offset: [0, -10] });
+      .bindTooltip((i + 1) + ". " + site.name, { direction: "top", offset: [0, -12] });
     if (!TRACE) marker.on("click", () => openCard(i, false));
     return marker;
   });
@@ -112,7 +113,7 @@
   }
 
   // ---- cards ----
-  function buildCard(site) {
+  function buildCard(site, i) {
     const li = document.createElement("li");
     li.className = "card";
 
@@ -143,7 +144,7 @@
 
     const name = document.createElement("h2");
     name.className = "card__name";
-    name.textContent = site.name;
+    name.textContent = (i + 1) + ". " + site.name;
     body.appendChild(name);
 
     const blurb = document.createElement("p");
@@ -151,15 +152,21 @@
     blurb.textContent = site.blurb;
     body.appendChild(blurb);
 
-    const audio = document.createElement("audio");
-    audio.controls = true;
-    audio.preload = "none";
-    audio.src = site.audio[0].file;
-
-    if (site.audio.length > 1) {
-      body.appendChild(buildVoiceSwitcher(site, audio));
+    if (site.audio && site.audio.length) {
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.preload = "none";
+      audio.src = site.audio[0].file;
+      if (site.audio.length > 1) {
+        body.appendChild(buildVoiceSwitcher(site, audio));
+      }
+      body.appendChild(audio);
+    } else {
+      const soon = document.createElement("p");
+      soon.className = "card__soon";
+      soon.textContent = "Narration coming soon";
+      body.appendChild(soon);
     }
-    body.appendChild(audio);
     li.appendChild(body);
 
     li._distEl = dist;
@@ -269,12 +276,12 @@
       entries.forEach(({ site, dist }) => {
         if (dist > (site.radius || DEFAULT_RADIUS) * 1.6) prompted.delete(site.id);
       });
-      const nearest = entries[0];
-      if (nearest && nearest.dist <= (nearest.site.radius || DEFAULT_RADIUS)) {
-        if (!prompted.has(nearest.site.id) && activePromptId !== nearest.site.id) {
-          prompted.add(nearest.site.id);
-          showPrompt(nearest.site);
-        }
+      const nearest = entries.find(
+        (e) => e.site.audio && e.site.audio.length && e.dist <= (e.site.radius || DEFAULT_RADIUS)
+      );
+      if (nearest && !prompted.has(nearest.site.id) && activePromptId !== nearest.site.id) {
+        prompted.add(nearest.site.id);
+        showPrompt(nearest.site);
       }
     }
   }

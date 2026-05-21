@@ -15,14 +15,129 @@
  *   radius  metres; how close you must be for the "you're here" prompt
  *   blurb   one-line summary shown on the card
  *   image   optional path to an image; omit for a plain card
- *   audio   array of voice options; the first is played by default
+ *   audio   optional array of voice options; the first plays by default
+ *
+ * Stops are numbered on the map in this array's order (the walking order).
  */
 const SITES = [
   {
+    id: "st-martins-church",
+    name: "St Martin's Church",
+    lat: 51.278032,
+    lng: 1.093665,
+    radius: 45,
+    blurb:
+      "The oldest church in the English-speaking world still in use, older than St Augustine's mission itself.",
+    audio: [
+      { label: "George", file: "assets/audio/st-martins-church.mp3" },
+      { label: "Emma", file: "assets/audio/st-martins-church-emma.mp3" },
+    ],
+  },
+  {
+    id: "st-augustines-abbey",
+    name: "St Augustine's Abbey",
+    lat: 51.277615,
+    lng: 1.087786,
+    radius: 55,
+    blurb:
+      "Founded in 598 — burial place of Anglo-Saxon kings and one of the cradles of English Christianity.",
+    audio: [
+      { label: "George", file: "assets/audio/st-augustines-abbey.mp3" },
+      { label: "Emma", file: "assets/audio/st-augustines-abbey-emma.mp3" },
+    ],
+  },
+  {
+    id: "fyndons-gate",
+    name: "Fyndon's Gate",
+    lat: 51.279065,
+    lng: 1.086933,
+    radius: 45,
+    blurb:
+      "The grand early-14th-century gateway to St Augustine's Abbey, and royal lodging for Charles I and his bride.",
+    audio: [
+      { label: "George", file: "assets/audio/fyndons-gate.mp3" },
+      { label: "Emma", file: "assets/audio/fyndons-gate-emma.mp3" },
+    ],
+  },
+  {
+    id: "queen-bertha-king-ethelbert",
+    name: "Queen Bertha & King Ethelbert",
+    lat: 51.279229,
+    lng: 1.086257,
+    blurb:
+      "Statues of the 6th-century Kentish king and his Frankish Christian queen, who received St Augustine's mission.",
+  },
+  {
+    id: "city-walls",
+    name: "City Walls",
+    lat: 51.279585,
+    lng: 1.085721,
+    blurb:
+      "Medieval walls on the line of the Roman circuit, still ringing much of the old city.",
+  },
+  {
+    id: "marlowe-theatre",
+    name: "The Marlowe Theatre",
+    lat: 51.281084,
+    lng: 1.078548,
+    blurb:
+      "Canterbury's riverside theatre, named after the playwright Christopher Marlowe, born in the city in 1564.",
+  },
+  {
+    id: "sollys-orchard",
+    name: "Solly's Orchard",
+    lat: 51.28188,
+    lng: 1.079155,
+    blurb: "A quiet green corner beside the Great Stour, just off the riverside path.",
+  },
+  {
+    id: "westgate-towers",
+    name: "Westgate Towers",
+    lat: 51.281538,
+    lng: 1.075791,
+    radius: 45,
+    blurb:
+      "England's largest surviving medieval city gate, guarding the pilgrims' road in from London.",
+    audio: [
+      { label: "George", file: "assets/audio/westgate-towers.mp3" },
+      { label: "Emma", file: "assets/audio/westgate-towers-emma.mp3" },
+    ],
+  },
+  {
+    id: "river-tours",
+    name: "River Tours",
+    lat: 51.281306,
+    lng: 1.074772,
+    blurb: "Boarding point for guided rowing-boat trips along the Great Stour.",
+  },
+  {
+    id: "westgate-gardens",
+    name: "Westgate Gardens",
+    lat: 51.280282,
+    lng: 1.073635,
+    blurb:
+      "Riverside public gardens along the Great Stour beneath the old city wall.",
+  },
+  {
+    id: "greyfriars-chapel",
+    name: "Greyfriars Chapel",
+    lat: 51.278959,
+    lng: 1.076746,
+    blurb: "Built over the Stour around 1267 — the first Franciscan friary in England.",
+  },
+  {
+    id: "the-beaney",
+    name: "The Beaney",
+    lat: 51.279651,
+    lng: 1.079203,
+    blurb:
+      "The Beaney House of Art and Knowledge: the city's museum, gallery and library.",
+  },
+  {
     id: "canterbury-cathedral",
     name: "Canterbury Cathedral",
-    lat: 51.2794,
-    lng: 1.0826,
+    lat: 51.279107,
+    lng: 1.081209,
     radius: 50,
     blurb:
       "Mother church of the Anglican Communion and seat of the Archbishop of Canterbury for over 1,400 years.",
@@ -33,56 +148,28 @@ const SITES = [
     ],
   },
   {
-    id: "fyndons-gate",
-    name: "Fyndon's Gate",
-    lat: 51.27905,
-    lng: 1.08885,
-    radius: 45,
+    id: "war-memorial",
+    name: "War Memorial",
+    lat: 51.279226,
+    lng: 1.081357,
     blurb:
-      "The grand early-14th-century gateway to St Augustine's Abbey, and royal lodging for Charles I and his bride.",
-    audio: [
-      { label: "George", file: "assets/audio/fyndons-gate.mp3" },
-      { label: "Emma", file: "assets/audio/fyndons-gate-emma.mp3" },
-    ],
+      "The city war memorial at the Buttermarket, before the cathedral's Christchurch Gate.",
   },
   {
-    id: "st-augustines-abbey",
-    name: "St Augustine's Abbey",
-    lat: 51.27795,
-    lng: 1.0901,
-    radius: 55,
+    id: "roman-museum",
+    name: "Roman Museum",
+    lat: 51.278643,
+    lng: 1.081469,
     blurb:
-      "Founded in 598 — burial place of Anglo-Saxon kings and one of the cradles of English Christianity.",
-    audio: [
-      { label: "George", file: "assets/audio/st-augustines-abbey.mp3" },
-      { label: "Emma", file: "assets/audio/st-augustines-abbey-emma.mp3" },
-    ],
+      "An underground museum built around an in-situ Roman mosaic and hypocaust.",
   },
   {
-    id: "st-martins-church",
-    name: "St Martin's Church",
-    lat: 51.27896,
-    lng: 1.0948,
-    radius: 45,
+    id: "st-georges-tower",
+    name: "St George's Tower",
+    lat: 51.277415,
+    lng: 1.082781,
     blurb:
-      "The oldest church in the English-speaking world still in use, older than St Augustine's mission itself.",
-    audio: [
-      { label: "George", file: "assets/audio/st-martins-church.mp3" },
-      { label: "Emma", file: "assets/audio/st-martins-church-emma.mp3" },
-    ],
-  },
-  {
-    id: "westgate-towers",
-    name: "Westgate Towers",
-    lat: 51.28055,
-    lng: 1.07631,
-    radius: 45,
-    blurb:
-      "England's largest surviving medieval city gate, guarding the pilgrims' road in from London.",
-    audio: [
-      { label: "George", file: "assets/audio/westgate-towers.mp3" },
-      { label: "Emma", file: "assets/audio/westgate-towers-emma.mp3" },
-    ],
+      "The lone tower of St George's Church, where Christopher Marlowe was baptised in 1564.",
   },
 ];
 

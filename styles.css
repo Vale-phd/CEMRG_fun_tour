@@ -117,6 +117,13 @@ main {
   font-size: 0.98rem;
 }
 
+.card__soon {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
 .voices {
   display: flex;
   flex-wrap: wrap;
@@ -171,14 +178,22 @@ main {
   z-index: 0;
 }
 
-.stop-pin__dot {
-  display: block;
-  width: 18px;
-  height: 18px;
+.stop-pin__n {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: var(--accent);
-  border: 3px solid #fff;
+  color: #fff;
+  font: 700 13px/1 "Iowan Old Style", Georgia, serif;
+  border: 2px solid #fff;
   box-shadow: 0 1px 4px rgba(45, 38, 34, 0.5);
+}
+
+.stop-pin__n--mute {
+  background: #b0a690;
 }
 
 .live-dot__core {
