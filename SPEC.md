@@ -224,9 +224,9 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
 
 - **Live URL:** https://vale-phd.github.io/CEMRG_fun_tour/
 - Deploys **automatically** via GitHub Actions (`.github/workflows/pages.yml`)
-  on every push to the default branch `claude/canterbury-tour-app-aXkYp`. The
-  workflow enables Pages on its first run; the first build takes ~1–2 minutes.
-- To ship a change: merge it into `claude/canterbury-tour-app-aXkYp` and push.
+  on every push to the default branch `main`. The workflow enables Pages on its
+  first run; the first build takes ~1–2 minutes.
+- To ship a change: merge it into `main` and push.
 - Generate a QR code for the live URL for easy sharing on the day.
 - **Note:** you can't open the live URL (or load map tiles) from the Claude Code
   web sandbox — its network is locked down and returns 403/blank regardless of

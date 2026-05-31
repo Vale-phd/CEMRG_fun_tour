@@ -15,9 +15,9 @@ data).
 
 - **Live:** https://vale-phd.github.io/CEMRG_fun_tour/
 - Deploys **automatically** via GitHub Pages on every push to the default branch
-  **`claude/canterbury-tour-app-aXkYp`** (workflow `.github/workflows/pages.yml`,
-  which also enables Pages on first run). The first build takes ~1–2 minutes.
-- To ship a change: merge it into `claude/canterbury-tour-app-aXkYp` and push.
+  **`main`** (workflow `.github/workflows/pages.yml`, which also enables Pages on
+  first run). The first build takes ~1–2 minutes.
+- To ship a change: merge it into `main` and push.
 
 ## Verifying in the Claude Code web sandbox (read before chasing errors)
 
