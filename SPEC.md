@@ -32,8 +32,25 @@ way, and exactly how to extend it.
   (George / Emma).
 - Everything is structured so adding the rest of the walk is data entry plus an
   audio-generation step (see §9).
-- **Theme songs** are an optional per-site layer — lyrics live in
-  `content/songs/`, and the sung MP3s are generated with ACE-Step (see §7.5).
+- **Theme songs** are a per-site layer — lyrics live in `content/songs/`, and the
+  sung MP3s are generated with ACE-Step (see §7.5).
+
+> **⚠️ TODO — the song MP3s still need to be made (reminder to self, Vale).**
+> The lyrics, the `song` fields in `sites.js`, and the on-card player are all
+> merged in — but the **5 sung MP3s do not exist yet**, so the song players stay
+> hidden for now. These songs ARE wanted for the tour; they're the last missing
+> piece. Generate each one with ACE-Step (§7.5) and save it at the path below —
+> the filename must match the site `id`, and the player then appears on its own:
+>
+> - [ ] `assets/audio/songs/st-martins-church.mp3` — "Where It Began"
+> - [ ] `assets/audio/songs/st-augustines-abbey.mp3` — "The Sleeping Stones"
+> - [ ] `assets/audio/songs/fyndons-gate.mp3` — "The Great Gate"
+> - [ ] `assets/audio/songs/westgate-towers.mp3` — "Through the Westgate"
+> - [ ] `assets/audio/songs/canterbury-cathedral.mp3` — "Ever the Same"
+>
+> Lyrics for each are already in `content/songs/<id>.txt`. ACE-Step needs a
+> capable (GPU / Apple-Silicon) machine and its weights are blocked on this build
+> box, so this step has to happen on your own machine.
 
 ## 4. Architecture & rationale
 
