@@ -235,15 +235,14 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
 
 ## 12. Roadmap / future enhancements
 
-- Add the remaining sites (Christ Church Gate, Fyndon's Gate / St Augustine's
-  Abbey, St Martin's Church, Westgate Towers, Eastbridge Hospital, Greyfriars,
-  Dane John & city walls, King's School).
+- **More sites.** The walk currently has 16 stops; obvious additions include
+  Eastbridge Hospital, Dane John Gardens, and King's School.
 - **Transcripts** under each player (accessibility + noisy streets); reuse the
   `content/*.txt` scripts.
 - **Offline / PWA:** cache the page + assets so it runs with no signal (handy
   inside the cathedral).
-- Real licensed photographs once an image source is reachable.
-- Optional simple map view.
+- Real licensed photographs once an image source is reachable — only the
+  cathedral has artwork so far; the rest use a plain title panel.
 
 ## 13. Decision log
 
