@@ -155,31 +155,26 @@ British Kokoro voices: `bf_alice`, `bf_isabella`, `bf_lily`, `bm_daniel`,
 `bm_fable`, `bm_lewis`. To change a voice: edit the list, rerun the generator,
 then update the matching `audio` array(s) in `sites.js`.
 
-### Per-stop narration style
+### Narration style (unified)
 
-Both voices simply speak whatever the script says, so a stop's **character
-lives entirely in its `content/<id>.txt`** — edit the text and regenerate to
-retune it. The five original stops are narrated straight; the other eleven each
-take on a deliberate persona:
+All sixteen stops share **one narrator voice**, modelled on the Canterbury
+Cathedral script: warm, informative, and fact-forward, spoken to "you", the
+visitor standing on the spot. Earlier drafts gave eleven stops comedic personas
+(herald, Roman legionary, friar, the talking tower, …); these were **retired**
+in favour of a single guide voice that carries more real history.
 
-| Stop                          | Style / persona                                  |
-| ----------------------------- | ------------------------------------------------ |
-| St Martin's Church            | Standard narration                               |
-| St Augustine's Abbey          | Standard narration                               |
-| Fyndon's Gate                 | Standard narration                               |
-| Canterbury Cathedral          | Standard narration                               |
-| Westgate Towers               | Standard narration                               |
-| Queen Bertha & King Ethelbert | Medieval town crier / herald                     |
-| City Walls                    | Roman legionary on guard duty                    |
-| The Marlowe Theatre           | Theatrical "luvvie"                              |
-| Solly's Orchard               | Dry, deadpan wit                                 |
-| Westgate Gardens              | Romantic nature poet                             |
-| River Tours                   | Salty old boatman                                |
-| Greyfriars Chapel             | Gentle Franciscan friar                          |
-| The Beaney                    | Excitable museum curator                         |
-| Roman Museum                  | Nerdy, over-caffeinated archaeologist            |
-| War Memorial                  | Solemn & sincere (deliberately plain, no comedy) |
-| St George's Tower             | First person — the tower itself (Blitz survivor) |
+House style for every `content/<id>.txt`:
+
+- **Ground it in something visible.** Open or pivot on a physical detail the
+  visitor is looking at — the Roman brick in St Martin's walls, the gun-loops on
+  the Westgate, the plane tree that has slowly swallowed an iron bench in
+  Westgate Gardens — then tell its story.
+- **A few true, vivid facts** per stop (fact-checked against public sources, see
+  §14), one memorable hook, and a short reflective close.
+- **The War Memorial stays dignified**, not jaunty — informative but solemn.
+
+The character of a stop lives entirely in its `content/<id>.txt`; edit the text
+and regenerate (above) to retune it.
 
 ## 8. Images / illustration policy
 
