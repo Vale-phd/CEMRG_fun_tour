@@ -28,7 +28,7 @@ const SITES = [
     radius: 45,
     blurb:
       "The oldest church in the English-speaking world still in use, older than St Augustine's mission itself.",
-    image: "assets/images/st-martins-church.png",
+    image: "assets/images/st-martins-church.jpg",
     audio: [
       { label: "George", file: "assets/audio/st-martins-church.mp3" },
       { label: "Lily", file: "assets/audio/st-martins-church-lily.mp3" },
@@ -42,7 +42,7 @@ const SITES = [
     radius: 55,
     blurb:
       "Founded in 598 — burial place of Anglo-Saxon kings and one of the cradles of English Christianity.",
-    image: "assets/images/st-augustines-abbey.png",
+    image: "assets/images/st-augustines-abbey.jpg",
     audio: [
       { label: "George", file: "assets/audio/st-augustines-abbey.mp3" },
       { label: "Lily", file: "assets/audio/st-augustines-abbey-lily.mp3" },
@@ -56,7 +56,7 @@ const SITES = [
     radius: 45,
     blurb:
       "The grand early-14th-century gateway to St Augustine's Abbey, and royal lodging for Charles I and his bride.",
-    image: "assets/images/fyndons-gate.png",
+    image: "assets/images/fyndons-gate.jpg",
     audio: [
       { label: "George", file: "assets/audio/fyndons-gate.mp3" },
       { label: "Lily", file: "assets/audio/fyndons-gate-lily.mp3" },
@@ -69,7 +69,7 @@ const SITES = [
     lng: 1.086257,
     blurb:
       "Statues of the 6th-century Kentish king and his Frankish Christian queen, who received St Augustine's mission.",
-    image: "assets/images/queen-bertha-king-ethelbert.png",
+    image: "assets/images/queen-bertha-king-ethelbert.jpg",
     audio: [
       { label: "George", file: "assets/audio/queen-bertha-king-ethelbert.mp3" },
       { label: "Lily", file: "assets/audio/queen-bertha-king-ethelbert-lily.mp3" },
@@ -82,7 +82,7 @@ const SITES = [
     lng: 1.085721,
     blurb:
       "Medieval walls on the line of the Roman circuit, still ringing much of the old city.",
-    image: "assets/images/city-walls.png",
+    image: "assets/images/city-walls.jpg",
     audio: [
       { label: "George", file: "assets/audio/city-walls.mp3" },
       { label: "Lily", file: "assets/audio/city-walls-lily.mp3" },
@@ -95,7 +95,7 @@ const SITES = [
     lng: 1.078548,
     blurb:
       "Canterbury's riverside theatre, named after the playwright Christopher Marlowe, born in the city in 1564.",
-    image: "assets/images/marlowe-theatre.png",
+    image: "assets/images/marlowe-theatre.jpg",
     audio: [
       { label: "George", file: "assets/audio/marlowe-theatre.mp3" },
       { label: "Lily", file: "assets/audio/marlowe-theatre-lily.mp3" },
@@ -107,7 +107,7 @@ const SITES = [
     lat: 51.28188,
     lng: 1.079155,
     blurb: "A quiet green corner beside the Great Stour, just off the riverside path.",
-    image: "assets/images/sollys-orchard.png",
+    image: "assets/images/sollys-orchard.jpg",
     audio: [
       { label: "George", file: "assets/audio/sollys-orchard.mp3" },
       { label: "Lily", file: "assets/audio/sollys-orchard-lily.mp3" },
@@ -121,7 +121,7 @@ const SITES = [
     radius: 45,
     blurb:
       "England's largest surviving medieval city gate, guarding the pilgrims' road in from London.",
-    image: "assets/images/westgate-towers.png",
+    image: "assets/images/westgate-towers.jpg",
     audio: [
       { label: "George", file: "assets/audio/westgate-towers.mp3" },
       { label: "Lily", file: "assets/audio/westgate-towers-lily.mp3" },
@@ -133,7 +133,7 @@ const SITES = [
     lat: 51.281306,
     lng: 1.074772,
     blurb: "Boarding point for guided rowing-boat trips along the Great Stour.",
-    image: "assets/images/river-tours.png",
+    image: "assets/images/river-tours.jpg",
     audio: [
       { label: "George", file: "assets/audio/river-tours.mp3" },
       { label: "Lily", file: "assets/audio/river-tours-lily.mp3" },
@@ -146,7 +146,7 @@ const SITES = [
     lng: 1.073635,
     blurb:
       "Riverside public gardens along the Great Stour beneath the old city wall.",
-    image: "assets/images/westgate-gardens.png",
+    image: "assets/images/westgate-gardens.jpg",
     audio: [
       { label: "George", file: "assets/audio/westgate-gardens.mp3" },
       { label: "Lily", file: "assets/audio/westgate-gardens-lily.mp3" },
@@ -158,7 +158,7 @@ const SITES = [
     lat: 51.278959,
     lng: 1.076746,
     blurb: "Built over the Stour around 1267 — the first Franciscan friary in England.",
-    image: "assets/images/greyfriars-chapel.png",
+    image: "assets/images/greyfriars-chapel.jpg",
     audio: [
       { label: "George", file: "assets/audio/greyfriars-chapel.mp3" },
       { label: "Lily", file: "assets/audio/greyfriars-chapel-lily.mp3" },
@@ -171,7 +171,7 @@ const SITES = [
     lng: 1.079203,
     blurb:
       "The Beaney House of Art and Knowledge: the city's museum, gallery and library.",
-    image: "assets/images/the-beaney.png",
+    image: "assets/images/the-beaney.jpg",
     audio: [
       { label: "George", file: "assets/audio/the-beaney.mp3" },
       { label: "Lily", file: "assets/audio/the-beaney-lily.mp3" },
@@ -185,7 +185,7 @@ const SITES = [
     radius: 50,
     blurb:
       "Mother church of the Anglican Communion and seat of the Archbishop of Canterbury for over 1,400 years.",
-    image: "assets/images/canterbury-cathedral.png",
+    image: "assets/images/canterbury-cathedral.jpg",
     audio: [
       { label: "George", file: "assets/audio/canterbury-cathedral.mp3" },
       { label: "Lily", file: "assets/audio/canterbury-cathedral-lily.mp3" },
@@ -198,7 +198,7 @@ const SITES = [
     lng: 1.081357,
     blurb:
       "The city war memorial at the Buttermarket, before the cathedral's Christchurch Gate.",
-    image: "assets/images/war-memorial.png",
+    image: "assets/images/war-memorial.jpg",
     audio: [
       { label: "George", file: "assets/audio/war-memorial.mp3" },
       { label: "Lily", file: "assets/audio/war-memorial-lily.mp3" },
@@ -211,7 +211,7 @@ const SITES = [
     lng: 1.081469,
     blurb:
       "An underground museum built around an in-situ Roman mosaic and hypocaust.",
-    image: "assets/images/roman-museum.png",
+    image: "assets/images/roman-museum.jpg",
     audio: [
       { label: "George", file: "assets/audio/roman-museum.mp3" },
       { label: "Lily", file: "assets/audio/roman-museum-lily.mp3" },
@@ -224,7 +224,7 @@ const SITES = [
     lng: 1.082781,
     blurb:
       "The lone tower of St George's Church, where Christopher Marlowe was baptised in 1564.",
-    image: "assets/images/st-georges-tower.png",
+    image: "assets/images/st-georges-tower.jpg",
     audio: [
       { label: "George", file: "assets/audio/st-georges-tower.mp3" },
       { label: "Lily", file: "assets/audio/st-georges-tower-lily.mp3" },

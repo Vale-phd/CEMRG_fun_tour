@@ -66,7 +66,7 @@ way, and exactly how to extend it.
 │   │   ├── canterbury-cathedral.mp3        # default voice (George)
 │   │   └── canterbury-cathedral-lily.mp3   # alternate voice (Lily)
 │   └── images/
-│       └── canterbury-cathedral.svg        # illustration
+│       └── canterbury-cathedral.jpg        # illustration (1280px JPEG, 1 per site)
 ├── tools/
 │   └── generate_audio.py          # text → MP3 generator (Kokoro)
 ├── models/                        # Kokoro model files — NOT committed (see §7)
@@ -178,9 +178,16 @@ and regenerate (above) to retune it.
 
 ## 8. Images / illustration policy
 
-- v1 uses an **original SVG illustration** of the cathedral
-  (`assets/images/canterbury-cathedral.svg`). It is our own artwork, so there
-  are no licensing constraints, it's tiny, and it scales crisply.
+- Each stop has its own illustration at `assets/images/<id>.jpg`, shown as the
+  card's header image (`object-fit: cover`).
+- **Keep them small (this bit us once):** store each at **1280 px on the long
+  edge, JPEG quality ~85** (~330–400 KB). That's all the UI can show — the card
+  panel is ≤420 px wide on desktop and full-width (≤~430 px) on phones, so 1280 px
+  stays crisp even at 3× device-pixel-ratio. The first cut shipped 1536×1024 PNGs
+  at ~3.5 MB each (56 MB total), which bloated the repo and dragged on mobile
+  data; re-encoding to JPEG cut the set to ~5.6 MB. Don't commit multi-MB PNGs.
+  Regenerate with Pillow: open → `.convert("RGB")` → resize long edge to 1280 →
+  `.save(path, "JPEG", quality=85, optimize=True, progressive=True)`.
 - **Why not a photo?** The build environment's network policy blocks Wikimedia
   (and similar image hosts), so a real Creative-Commons photo couldn't be pulled
   in automatically. Swapping one in later is trivial: drop the file in
@@ -253,8 +260,9 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
 - **Data inline in `sites.js`, not fetched JSON.** Avoids `fetch`/CORS issues
   and works from `file://`; simpler for a tiny dataset.
 - **Online-only in v1.** Simplicity first; offline is a known future step.
-- **SVG illustration in v1.** Copyright-clean and unblocked by the network
-  policy; real photos are an easy later swap.
+- **Per-stop JPEG illustrations.** Stored at 1280 px / JPEG q85 (~350 KB each) to
+  keep the repo light and mobile loads fast (an early single SVG was replaced once
+  every stop had artwork). Real photos remain an easy later swap.
 - **Map-first interface.** The map is the browser: full-screen, with the
   per-stop cards shown on demand in a slide-in panel (docked right on desktop, a
   bottom sheet on phones) instead of a scrolling list. It reuses the existing
