@@ -31,7 +31,7 @@ const SITES = [
     image: "assets/images/st-martins-church.png",
     audio: [
       { label: "George", file: "assets/audio/st-martins-church.mp3" },
-      { label: "Emma", file: "assets/audio/st-martins-church-emma.mp3" },
+      { label: "Lily", file: "assets/audio/st-martins-church-lily.mp3" },
     ],
   },
   {
@@ -45,7 +45,7 @@ const SITES = [
     image: "assets/images/st-augustines-abbey.png",
     audio: [
       { label: "George", file: "assets/audio/st-augustines-abbey.mp3" },
-      { label: "Emma", file: "assets/audio/st-augustines-abbey-emma.mp3" },
+      { label: "Lily", file: "assets/audio/st-augustines-abbey-lily.mp3" },
     ],
   },
   {
@@ -59,7 +59,7 @@ const SITES = [
     image: "assets/images/fyndons-gate.png",
     audio: [
       { label: "George", file: "assets/audio/fyndons-gate.mp3" },
-      { label: "Emma", file: "assets/audio/fyndons-gate-emma.mp3" },
+      { label: "Lily", file: "assets/audio/fyndons-gate-lily.mp3" },
     ],
   },
   {
@@ -72,7 +72,7 @@ const SITES = [
     image: "assets/images/queen-bertha-king-ethelbert.png",
     audio: [
       { label: "George", file: "assets/audio/queen-bertha-king-ethelbert.mp3" },
-      { label: "Emma", file: "assets/audio/queen-bertha-king-ethelbert-emma.mp3" },
+      { label: "Lily", file: "assets/audio/queen-bertha-king-ethelbert-lily.mp3" },
     ],
   },
   {
@@ -85,7 +85,7 @@ const SITES = [
     image: "assets/images/city-walls.png",
     audio: [
       { label: "George", file: "assets/audio/city-walls.mp3" },
-      { label: "Emma", file: "assets/audio/city-walls-emma.mp3" },
+      { label: "Lily", file: "assets/audio/city-walls-lily.mp3" },
     ],
   },
   {
@@ -98,7 +98,7 @@ const SITES = [
     image: "assets/images/marlowe-theatre.png",
     audio: [
       { label: "George", file: "assets/audio/marlowe-theatre.mp3" },
-      { label: "Emma", file: "assets/audio/marlowe-theatre-emma.mp3" },
+      { label: "Lily", file: "assets/audio/marlowe-theatre-lily.mp3" },
     ],
   },
   {
@@ -110,7 +110,7 @@ const SITES = [
     image: "assets/images/sollys-orchard.png",
     audio: [
       { label: "George", file: "assets/audio/sollys-orchard.mp3" },
-      { label: "Emma", file: "assets/audio/sollys-orchard-emma.mp3" },
+      { label: "Lily", file: "assets/audio/sollys-orchard-lily.mp3" },
     ],
   },
   {
@@ -124,7 +124,7 @@ const SITES = [
     image: "assets/images/westgate-towers.png",
     audio: [
       { label: "George", file: "assets/audio/westgate-towers.mp3" },
-      { label: "Emma", file: "assets/audio/westgate-towers-emma.mp3" },
+      { label: "Lily", file: "assets/audio/westgate-towers-lily.mp3" },
     ],
   },
   {
@@ -136,7 +136,7 @@ const SITES = [
     image: "assets/images/river-tours.png",
     audio: [
       { label: "George", file: "assets/audio/river-tours.mp3" },
-      { label: "Emma", file: "assets/audio/river-tours-emma.mp3" },
+      { label: "Lily", file: "assets/audio/river-tours-lily.mp3" },
     ],
   },
   {
@@ -149,7 +149,7 @@ const SITES = [
     image: "assets/images/westgate-gardens.png",
     audio: [
       { label: "George", file: "assets/audio/westgate-gardens.mp3" },
-      { label: "Emma", file: "assets/audio/westgate-gardens-emma.mp3" },
+      { label: "Lily", file: "assets/audio/westgate-gardens-lily.mp3" },
     ],
   },
   {
@@ -161,7 +161,7 @@ const SITES = [
     image: "assets/images/greyfriars-chapel.png",
     audio: [
       { label: "George", file: "assets/audio/greyfriars-chapel.mp3" },
-      { label: "Emma", file: "assets/audio/greyfriars-chapel-emma.mp3" },
+      { label: "Lily", file: "assets/audio/greyfriars-chapel-lily.mp3" },
     ],
   },
   {
@@ -174,7 +174,7 @@ const SITES = [
     image: "assets/images/the-beaney.png",
     audio: [
       { label: "George", file: "assets/audio/the-beaney.mp3" },
-      { label: "Emma", file: "assets/audio/the-beaney-emma.mp3" },
+      { label: "Lily", file: "assets/audio/the-beaney-lily.mp3" },
     ],
   },
   {
@@ -188,7 +188,7 @@ const SITES = [
     image: "assets/images/canterbury-cathedral.png",
     audio: [
       { label: "George", file: "assets/audio/canterbury-cathedral.mp3" },
-      { label: "Emma", file: "assets/audio/canterbury-cathedral-emma.mp3" },
+      { label: "Lily", file: "assets/audio/canterbury-cathedral-lily.mp3" },
     ],
   },
   {
@@ -201,7 +201,7 @@ const SITES = [
     image: "assets/images/war-memorial.png",
     audio: [
       { label: "George", file: "assets/audio/war-memorial.mp3" },
-      { label: "Emma", file: "assets/audio/war-memorial-emma.mp3" },
+      { label: "Lily", file: "assets/audio/war-memorial-lily.mp3" },
     ],
   },
   {
@@ -214,7 +214,7 @@ const SITES = [
     image: "assets/images/roman-museum.png",
     audio: [
       { label: "George", file: "assets/audio/roman-museum.mp3" },
-      { label: "Emma", file: "assets/audio/roman-museum-emma.mp3" },
+      { label: "Lily", file: "assets/audio/roman-museum-lily.mp3" },
     ],
   },
   {
@@ -227,7 +227,7 @@ const SITES = [
     image: "assets/images/st-georges-tower.png",
     audio: [
       { label: "George", file: "assets/audio/st-georges-tower.mp3" },
-      { label: "Emma", file: "assets/audio/st-georges-tower-emma.mp3" },
+      { label: "Lily", file: "assets/audio/st-georges-tower-lily.mp3" },
     ],
   },
 ];

@@ -34,7 +34,7 @@ VOICES_BIN = ROOT / "models" / "voices-v1.0.bin"
 # bare <site-id>.mp3 that the app plays first. Add or remove entries freely.
 VOICES = [
     {"key": "george", "kokoro": "bm_george", "label": "George (British male)", "default": True},
-    {"key": "emma", "kokoro": "bf_emma", "label": "Emma (British female)", "default": False},
+    {"key": "lily", "kokoro": "bf_lily", "label": "Lily (British female)", "default": False},
 ]
 LANG = "en-gb"
 SAMPLE_RATE = 24000
