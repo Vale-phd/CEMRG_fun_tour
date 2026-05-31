@@ -7,9 +7,10 @@ guide and data model; this file captures the things that are easy to get wrong.
 
 A static, no-build walking audio guide. A full-screen Leaflet map shows the
 route and numbered stops; tapping a stop slides the map aside and opens that
-location's card (blurb + George/Lily narration). Three files plus data:
-`index.html`, `styles.css`, `app.js`, and `sites.js` (the `SITES` / `ROUTE`
-data).
+location's card (blurb + George/Lily narration). On phones that card is a bottom
+sheet you can collapse to just the title + player (for a bigger map) and restore;
+visited stops turn green. Three files plus data: `index.html`, `styles.css`,
+`app.js`, and `sites.js` (the `SITES` / `ROUTE` data).
 
 ## Live site & deploy
 
@@ -38,21 +39,43 @@ python3 -m http.server 8137        # serve the repo, then point Playwright at it
 
 Playwright is installed (browsers in `/opt/pw-browsers`, module at
 `/opt/node22/lib/node_modules/playwright`). Assert behaviour from the DOM
-(`#app.detail-open`, the panel's width/height, `#detailContent .card`) rather
-than relying on the (tile-less) screenshots.
+(`#app.detail-open`, `#app.detail-collapsed`, the panel's width/height,
+`#detailContent .card`, `.stop-pin__n--visited`) rather than relying on the
+(tile-less) screenshots. For the mobile sheet, resize to a phone viewport
+(e.g. 390×780) first — the collapse handle, Finish, and instruction-hiding are
+all behind the `@media (max-width: 700px)` query.
 
 ## Interface map (where things live)
 
 - `index.html` — `#app` wraps the full-screen `#map` and the slide-in `#detail`
-  panel; a floating `.map-overlay` holds the title + location status.
+  panel; a floating `.map-overlay` holds the title + location status. Inside
+  `#detail`: the desktop `#detailClose` ×, the mobile `#detailToggle` collapse
+  handle (a circular chevron chip), and `#detailContent`. A `#finishFloat` pill
+  lives at body level (shown only on a collapsed mobile sheet).
 - `app.js` — `openDetail()` / `closeDetail()` drive the panel: slide the map
   (docked right at ≥701px, bottom sheet at ≤700px), recenter the stop, show the
   persistent card, highlight the active pin, and pause other narrations. Close
   button or Esc reverses it. The geolocation arrival prompt opens the panel; live
-  distance shows on the open card. Hidden `#trace` / `#poi` authoring tools: see
-"Hidden authoring tools" below.
+  distance shows on the open card.
+  - **Mobile sheet collapse:** `setCollapsed()` / `toggleCollapse()` add/remove
+    `.detail-collapsed` on `#app`; collapsed shows only the title + audio player
+    for a bigger map, and the chevron flips to "restore". `openDetail()` always
+    re-expands (`setCollapsed(false)`).
+  - **Visited stops:** `markVisited()` records opened stops in the `visited` set
+    and adds `.stop-pin__n--visited` (green) to their pins — persists for the
+    session, resets on reload (no `localStorage` yet).
+  - **Finish:** an inline "Finish" button (built into the card next to the voice
+    buttons) and the floating `#finishFloat` both just call `closeDetail()` —
+    returning to the map and bringing the `.map-overlay` instructions back.
+  - Hidden `#trace` / `#poi` authoring tools: see "Hidden authoring tools" below.
 - `styles.css` — the panel animates `width` (desktop) / `height` (mobile bottom
-  sheet) via the `.detail-open` class; `--panel-w` / `--panel-h` tune the size.
+  sheet) via the `.detail-open` class; `--panel-w` / `--panel-h` /
+  `--panel-h-collapsed` tune the sizes. The mobile collapse handle, inline
+  Finish, floating Finish, and the "hide `.map-overlay` while a stop is open"
+  rule all live in the `@media (max-width: 700px)` block — **mobile-only; desktop
+  keeps the × and the always-visible title pill.** The `#detailToggle` chip is
+  `position: fixed` and straddles the sheet's top edge so its background is the
+  map, not a white bar.
 
 ## Narration (voices & scripts)
 

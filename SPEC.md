@@ -27,7 +27,15 @@ way, and exactly how to extend it.
 4. Tapping a numbered stop (or the arrival prompt) **slides the map aside and
    opens that stop's card** — docked to the right on wide screens, a bottom
    sheet on phones. They press play and listen; a voice switcher picks the
-   narrator. Close (× or Esc) returns to the full-screen map.
+   narrator. Once opened, the stop's pin turns **green** so they can see where
+   they've been.
+5. **On phones** the sheet can be **collapsed** (a chevron handle on its top
+   edge) down to just the title + audio player, giving a bigger map while the
+   narration keeps playing; the handle flips to restore the full card. A
+   **Finish** button (next to the voice buttons when expanded, a floating pill
+   when collapsed) returns to the full-screen map and brings back the
+   instructions bubble. On wide screens the card stays docked and closes with ×
+   or Esc.
 
 ## 3. Current status
 
@@ -243,6 +251,8 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
   `content/*.txt` scripts.
 - **Offline / PWA:** cache the page + assets so it runs with no signal (handy
   inside the cathedral).
+- **Persist visited stops** across reloads (e.g. `localStorage`) — currently the
+  green visited-pin state is session-only and resets on refresh.
 - Real licensed photographs once an image source is reachable — only the
   cathedral has artwork so far; the rest use a plain title panel.
 
@@ -268,6 +278,18 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
   bottom sheet on phones) instead of a scrolling list. It reuses the existing
   card + voice-switcher markup; geolocation now drives the live dot, the arrival
   prompt, and the open card's distance rather than reordering a list.
+- **Mobile sheet is collapsible, not just open/closed.** On phones a stop is a
+  bottom sheet that collapses to title + player (bigger map, audio keeps
+  playing) and restores — driven by a graphical chevron chip that floats on the
+  sheet's top edge (`position: fixed`, transparent behind it, so no white bar)
+  rather than the desktop × (which is hidden on phones). A "Finish" button is
+  the explicit way back to the map, and the title/instructions bubble is hidden
+  whenever a stop is open on mobile so it doesn't compete with the sheet. All of
+  this is mobile-only (`@media (max-width: 700px)`); desktop is unchanged.
+- **Visited stops shown green, session-only.** Opening a stop turns its pin
+  green so visitors can see progress at a glance. Kept in memory (a `visited`
+  set), not `localStorage` — simplest thing that helps during a single walk;
+  persisting across reloads is a documented future step (§12).
 
 ## 14. Content accuracy
 
