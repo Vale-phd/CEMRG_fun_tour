@@ -1,28 +1,31 @@
 (function () {
   "use strict";
 
-  const listEl = document.getElementById("siteList");
   const statusEl = document.getElementById("locStatus");
   const mapEl = document.getElementById("map");
+  const appEl = document.getElementById("app");
+  const detailEl = document.getElementById("detail");
+  const detailContent = document.getElementById("detailContent");
+  const closeBtn = document.getElementById("detailClose");
   const promptEl = document.getElementById("arrivePrompt");
   const promptText = document.getElementById("arriveText");
   const promptListen = document.getElementById("arriveListen");
   const promptDismiss = document.getElementById("arriveDismiss");
 
   const DEFAULT_RADIUS = 40; // metres; "you're here" threshold
+  const PANEL_MS = 360; // keep in sync with the panel transition in styles.css
   const TRACE = location.hash.toLowerCase().indexOf("trace") !== -1;
   const POI = location.hash.toLowerCase().indexOf("poi") !== -1;
 
-  // ---- list cards ----
+  // ---- the per-site cards (built once, shown in the detail panel on demand) ----
   const cards = SITES.map(buildCard);
-  let currentOrder = "";
-  render(SITES.map((site, i) => ({ site, card: cards[i], dist: null })));
 
   // ---- map ----
   const map = L.map(mapEl, { zoomControl: true });
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · Audio: Kokoro TTS',
   }).addTo(map);
 
   let routeLayer = null;
@@ -44,7 +47,7 @@
     const marker = L.marker([site.lat, site.lng], { icon, title: site.name, interactive: !TRACE })
       .addTo(map)
       .bindTooltip((i + 1) + ". " + site.name, { direction: "top", offset: [0, -12] });
-    if (!TRACE) marker.on("click", () => openCard(i, false));
+    if (!TRACE) marker.on("click", () => openDetail(i, false));
     return marker;
   });
 
@@ -78,6 +81,81 @@
   if (POI) setupPoi();
   else if (TRACE) setupTrace();
 
+  // ---- detail panel ----
+  let activeIndex = -1;
+  let panelTimer = null;
+
+  closeBtn.addEventListener("click", closeDetail);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && activeIndex !== -1) closeDetail();
+  });
+
+  // Open the panel for a stop: slide the map aside, show its card, recenter.
+  function openDetail(index, play) {
+    const card = cards[index];
+    pauseAudioExcept(index);
+    detailContent.replaceChildren(card);
+    detailContent.scrollTop = 0;
+    setActiveMarker(index);
+    detailEl.removeAttribute("inert");
+    detailEl.setAttribute("aria-hidden", "false");
+    appEl.classList.add("detail-open");
+    hidePrompt();
+    activeIndex = index;
+
+    // let the panel finish sliding, then resize the map and frame the stop
+    afterPanel(() => {
+      map.invalidateSize({ animate: false });
+      const s = SITES[index];
+      map.setView([s.lat, s.lng], Math.max(map.getZoom(), 16), { animate: true });
+    });
+
+    if (play) {
+      const audio = card.querySelector("audio");
+      if (audio) audio.play().catch(() => {});
+    }
+    detailEl.focus({ preventScroll: true });
+  }
+
+  function closeDetail() {
+    if (activeIndex === -1) return;
+    const audio = cards[activeIndex].querySelector("audio");
+    if (audio) audio.pause();
+    setActiveMarker(-1);
+    appEl.classList.remove("detail-open");
+    detailEl.setAttribute("aria-hidden", "true");
+    detailEl.setAttribute("inert", "");
+    activeIndex = -1;
+
+    afterPanel(() => {
+      detailContent.replaceChildren();
+      map.invalidateSize({ animate: false });
+    });
+    mapEl.focus({ preventScroll: true });
+  }
+
+  function afterPanel(fn) {
+    if (panelTimer) clearTimeout(panelTimer);
+    panelTimer = setTimeout(() => { panelTimer = null; fn(); }, PANEL_MS);
+  }
+
+  function pauseAudioExcept(index) {
+    cards.forEach((card, i) => {
+      if (i === index) return;
+      const audio = card.querySelector("audio");
+      if (audio && !audio.paused) audio.pause();
+    });
+  }
+
+  function setActiveMarker(index) {
+    stopMarkers.forEach((marker, i) => {
+      const el = marker && marker.getElement && marker.getElement();
+      if (!el) return;
+      const span = el.querySelector(".stop-pin__n");
+      if (span) span.classList.toggle("stop-pin__n--active", i === index);
+    });
+  }
+
   // ---- arrival prompt ----
   let activePromptId = null;
   const prompted = new Set();
@@ -86,7 +164,7 @@
   promptListen.addEventListener("click", () => {
     const i = SITES.findIndex((s) => s.id === activePromptId);
     hidePrompt();
-    if (i >= 0) openCard(i, true);
+    if (i >= 0) openDetail(i, true);
   });
 
   function showPrompt(site) {
@@ -100,21 +178,9 @@
     activePromptId = null;
   }
 
-  // ---- open a card (scroll into view, optionally play) ----
-  function openCard(index, play) {
-    const card = cards[index];
-    card.scrollIntoView({ behavior: "smooth", block: "center" });
-    card.classList.add("is-focused");
-    setTimeout(() => card.classList.remove("is-focused"), 2200);
-    if (play) {
-      const audio = card.querySelector("audio");
-      if (audio) audio.play().catch(() => {});
-    }
-  }
-
   // ---- cards ----
   function buildCard(site, i) {
-    const li = document.createElement("li");
+    const li = document.createElement("article");
     li.className = "card";
 
     const media = document.createElement("div");
@@ -203,18 +269,10 @@
     return wrap;
   }
 
-  function render(entries) {
-    const order = entries.map((e) => e.site.id).join(",");
-    if (order === currentOrder) return;
-    currentOrder = order;
-    listEl.replaceChildren(...entries.map((e) => e.card));
-  }
-
   // ---- geolocation ----
   function startLocation() {
     if (!("geolocation" in navigator)) {
-      statusEl.textContent =
-        "Location isn’t available here — just pick the site you’re standing at.";
+      statusEl.textContent = "Tap a numbered stop to listen.";
       return;
     }
     navigator.geolocation.watchPosition(onPosition, onError, {
@@ -246,33 +304,33 @@
         stroke: false,
         fillOpacity: 0.12,
       }).addTo(map);
-      if (autoCenter) map.setView(here, Math.max(map.getZoom(), 16));
+      if (autoCenter && activeIndex === -1) map.setView(here, Math.max(map.getZoom(), 16));
     } else {
       liveMarker.setLatLng(here);
       accuracyCircle.setLatLng(here).setRadius(accuracy || 0);
-      if (autoCenter) map.panTo(here);
+      if (autoCenter && activeIndex === -1) map.panTo(here);
     }
 
+    // live distance on every card (only the open one is visible)
     const entries = SITES.map((site, i) => ({
       site,
-      card: cards[i],
+      i,
       dist: haversine(latitude, longitude, site.lat, site.lng),
     }));
     entries.sort((a, b) => a.dist - b.dist);
 
-    entries.forEach(({ site, card, dist }) => {
-      const el = card._distEl;
+    entries.forEach(({ site, i, dist }) => {
+      const el = cards[i]._distEl;
       el.hidden = false;
       const near = dist <= (site.radius || DEFAULT_RADIUS);
       el.textContent = near ? "You’re here" : formatDistance(dist);
       el.classList.toggle("is-near", near);
     });
 
-    statusEl.textContent = "Sorted by nearest — walk up to a site and press play.";
-    render(entries);
+    statusEl.textContent = "Tap a numbered stop — or walk up to one — to listen.";
 
-    // arrival prompt for the nearest stop within its radius
-    if (!TRACE && !POI) {
+    // arrival prompt for the nearest stop within its radius (not while reading a stop)
+    if (!TRACE && !POI && activeIndex === -1) {
       entries.forEach(({ site, dist }) => {
         if (dist > (site.radius || DEFAULT_RADIUS) * 1.6) prompted.delete(site.id);
       });
@@ -289,8 +347,8 @@
   function onError(err) {
     statusEl.textContent =
       err.code === err.PERMISSION_DENIED
-        ? "Location is off — no problem, just pick the site you’re at."
-        : "Couldn’t get a location fix — just pick the site you’re at.";
+        ? "Location is off — just tap the stop you’re at."
+        : "Couldn’t get a location fix — just tap the stop you’re at.";
   }
 
   function haversine(lat1, lon1, lat2, lon2) {

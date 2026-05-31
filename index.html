@@ -13,21 +13,26 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="topbar">
-      <h1>Canterbury Walking Tour</h1>
-      <p class="tagline">Walk up to a site, tap it, and listen.</p>
-    </header>
+    <div id="app" class="app">
+      <div id="map" class="map" role="application" aria-label="Map of the walking tour"></div>
 
-    <div id="map" class="map" role="application" aria-label="Map of the walking tour"></div>
+      <aside
+        id="detail"
+        class="detail"
+        aria-label="Site details"
+        aria-hidden="true"
+        tabindex="-1"
+        inert
+      >
+        <button id="detailClose" type="button" class="detail__close" aria-label="Close">&times;</button>
+        <div id="detailContent" class="detail__content"></div>
+      </aside>
+    </div>
 
-    <main>
+    <div class="map-overlay">
+      <h1 class="brand">Canterbury Walking Tour</h1>
       <p id="locStatus" class="loc-status" role="status">Finding your location…</p>
-      <ul id="siteList" class="site-list"></ul>
-    </main>
-
-    <footer class="footer">
-      <p>Audio narration generated with Kokoro TTS. Map data &copy; OpenStreetMap contributors.</p>
-    </footer>
+    </div>
 
     <div id="arrivePrompt" class="arrive" hidden role="alert">
       <span id="arriveText" class="arrive__text"></span>
