@@ -25,6 +25,19 @@
         inert
       >
         <button id="detailClose" type="button" class="detail__close" aria-label="Close">&times;</button>
+        <button
+          id="detailToggle"
+          type="button"
+          class="detail__toggle"
+          aria-label="Collapse"
+          aria-expanded="true"
+        >
+          <span class="detail__toggle-chip" aria-hidden="true">
+            <svg class="detail__toggle-icon" viewBox="0 0 24 24" fill="none" focusable="false">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </button>
         <div id="detailContent" class="detail__content"></div>
       </aside>
     </div>
@@ -41,6 +54,8 @@
         <button id="arriveDismiss" type="button" class="arrive__dismiss" aria-label="Dismiss">&times;</button>
       </span>
     </div>
+
+    <button id="finishFloat" type="button" class="finish-float">Finish</button>
 
     <script src="vendor/leaflet/leaflet.js"></script>
     <script src="sites.js"></script>

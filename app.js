@@ -7,6 +7,8 @@
   const detailEl = document.getElementById("detail");
   const detailContent = document.getElementById("detailContent");
   const closeBtn = document.getElementById("detailClose");
+  const toggleBtn = document.getElementById("detailToggle");
+  const finishFloat = document.getElementById("finishFloat");
   const promptEl = document.getElementById("arrivePrompt");
   const promptText = document.getElementById("arriveText");
   const promptListen = document.getElementById("arriveListen");
@@ -84,8 +86,11 @@
   // ---- detail panel ----
   let activeIndex = -1;
   let panelTimer = null;
+  const visited = new Set(); // stops the visitor has opened — their pins go green
 
   closeBtn.addEventListener("click", closeDetail);
+  toggleBtn.addEventListener("click", toggleCollapse);
+  finishFloat.addEventListener("click", closeDetail);
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && activeIndex !== -1) closeDetail();
   });
@@ -97,9 +102,11 @@
     detailContent.replaceChildren(card);
     detailContent.scrollTop = 0;
     setActiveMarker(index);
+    markVisited(index);
     detailEl.removeAttribute("inert");
     detailEl.setAttribute("aria-hidden", "false");
     appEl.classList.add("detail-open");
+    setCollapsed(false);
     hidePrompt();
     activeIndex = index;
 
@@ -123,6 +130,7 @@
     if (audio) audio.pause();
     setActiveMarker(-1);
     appEl.classList.remove("detail-open");
+    setCollapsed(false);
     detailEl.setAttribute("aria-hidden", "true");
     detailEl.setAttribute("inert", "");
     activeIndex = -1;
@@ -154,6 +162,30 @@
       const span = el.querySelector(".stop-pin__n");
       if (span) span.classList.toggle("stop-pin__n--active", i === index);
     });
+  }
+
+  // mark a stop (and every previously opened one) as visited — those pins turn green
+  function markVisited(index) {
+    if (index >= 0) visited.add(index);
+    stopMarkers.forEach((marker, i) => {
+      if (!visited.has(i)) return;
+      const el = marker && marker.getElement && marker.getElement();
+      const span = el && el.querySelector(".stop-pin__n");
+      if (span) span.classList.add("stop-pin__n--visited");
+    });
+  }
+
+  // collapse the sheet down to just the title + player (mobile), or restore it
+  function setCollapsed(collapsed) {
+    appEl.classList.toggle("detail-collapsed", collapsed);
+    toggleBtn.setAttribute("aria-expanded", String(!collapsed));
+    toggleBtn.setAttribute("aria-label", collapsed ? "Expand" : "Collapse");
+  }
+
+  function toggleCollapse() {
+    if (activeIndex === -1) return;
+    setCollapsed(!appEl.classList.contains("detail-collapsed"));
+    afterPanel(() => map.invalidateSize({ animate: false }));
   }
 
   // ---- arrival prompt ----
@@ -233,6 +265,23 @@
       soon.textContent = "Narration coming soon";
       body.appendChild(soon);
     }
+
+    // "Finish" — closes the sheet and brings the map instructions back (mobile)
+    const finishBtn = document.createElement("button");
+    finishBtn.type = "button";
+    finishBtn.className = "voice-btn voice-finish";
+    finishBtn.textContent = "Finish";
+    finishBtn.addEventListener("click", closeDetail);
+    const voicesRow = body.querySelector(".voices");
+    if (voicesRow) {
+      voicesRow.appendChild(finishBtn);
+    } else {
+      const actions = document.createElement("div");
+      actions.className = "voices card__actions";
+      actions.appendChild(finishBtn);
+      body.appendChild(actions);
+    }
+
     li.appendChild(body);
 
     li._distEl = dist;
