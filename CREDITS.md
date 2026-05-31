@@ -3,7 +3,7 @@
 ## Audio
 - Narration synthesised with **Kokoro** TTS (Apache-2.0),
   https://github.com/thewh1teagle/kokoro-onnx — British voices `bm_george`
-  and `bf_emma`. Scripts in `content/` are this project's own writing.
+  and `bf_lily`. Scripts in `content/` are this project's own writing.
 
 ## Images
 - `assets/images/canterbury-cathedral.svg` — original illustration created for

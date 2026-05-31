@@ -33,7 +33,7 @@ way, and exactly how to extend it.
 
 - **Live at https://vale-phd.github.io/CEMRG_fun_tour/** — a full-screen map
   with **16 narrated stops**, each with two British narrator voices
-  (George / Emma).
+  (George / Lily).
 - Adding more stops is data entry plus an audio-generation step (see §9).
 
 ## 4. Architecture & rationale
@@ -64,7 +64,7 @@ way, and exactly how to extend it.
 ├── assets/
 │   ├── audio/                     # generated MP3s (committed)
 │   │   ├── canterbury-cathedral.mp3        # default voice (George)
-│   │   └── canterbury-cathedral-emma.mp3   # alternate voice (Emma)
+│   │   └── canterbury-cathedral-lily.mp3   # alternate voice (Lily)
 │   └── images/
 │       └── canterbury-cathedral.svg        # illustration
 ├── tools/
@@ -103,8 +103,8 @@ the walking route line drawn on the map (see the hidden `#trace` tool in
 ## 7. Narration & audio pipeline
 
 > **Quick answer — which voice is which:** **George** is Kokoro `bm_george`
-> (British **male**, the default `<id>.mp3`); **Emma** is `bf_emma` (British
-> **female**, `<id>-emma.mp3`). Full table below.
+> (British **male**, the default `<id>.mp3`); **Lily** is `bf_lily` (British
+> **female**, `<id>-lily.mp3`). Full table below.
 
 **Engine:** [Kokoro](https://github.com/thewh1teagle/kokoro-onnx) — an open
 (Apache-2.0) neural TTS, run here via the ONNX runtime. Chosen over Piper for
@@ -143,15 +143,15 @@ What the script does (`tools/generate_audio.py`):
 ### Voices
 
 Two British narrators are generated for every stop. The default (the bare
-`<id>.mp3` the app plays first) is **George**; the alternate is **Emma**.
+`<id>.mp3` the app plays first) is **George**; the alternate is **Lily**.
 
 | App label  | Kokoro voice | Voice          | File              | Default |
 | ---------- | ------------ | -------------- | ----------------- | :-----: |
 | **George** | `bm_george`  | British male   | `<id>.mp3`        |    ✓    |
-| **Emma**   | `bf_emma`    | British female | `<id>-emma.mp3`   |         |
+| **Lily**   | `bf_lily`    | British female | `<id>-lily.mp3`   |         |
 
 Configured in the `VOICES` list at the top of `tools/generate_audio.py`. Other
-British Kokoro voices: `bf_alice`, `bf_isabella`, `bf_lily`, `bm_daniel`,
+British Kokoro voices: `bf_alice`, `bf_emma`, `bf_isabella`, `bm_daniel`,
 `bm_fable`, `bm_lewis`. To change a voice: edit the list, rerun the generator,
 then update the matching `audio` array(s) in `sites.js`.
 

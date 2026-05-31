@@ -7,7 +7,7 @@ guide and data model; this file captures the things that are easy to get wrong.
 
 A static, no-build walking audio guide. A full-screen Leaflet map shows the
 route and numbered stops; tapping a stop slides the map aside and opens that
-location's card (blurb + George/Emma narration). Three files plus data:
+location's card (blurb + George/Lily narration). Three files plus data:
 `index.html`, `styles.css`, `app.js`, and `sites.js` (the `SITES` / `ROUTE`
 data).
 
@@ -57,7 +57,7 @@ than relying on the (tile-less) screenshots.
 ## Narration (voices & scripts)
 
 - **George** = Kokoro `bm_george` (British male) — the **default** `<id>.mp3`.
-  **Emma** = `bf_emma` (British female) — the `<id>-emma.mp3`. Both ship for
+  **Lily** = `bf_lily` (British female) — the `<id>-lily.mp3`. Both ship for
   every stop.
 - Scripts live in `content/<id>.txt`, one per stop — these are raw TTS input, so
   **no comments or stage directions** (they'd be read aloud). All 16 stops now
