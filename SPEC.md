@@ -81,17 +81,30 @@ plain `<script>` before `app.js` (no `fetch`, so it works even from `file://`).
 
 Each site object:
 
-| field   | type     | notes                                                        |
-| ------- | -------- | ------------------------------------------------------------ |
-| `id`    | string   | unique slug; **must match** `content/<id>.txt` and the audio filenames |
-| `name`  | string   | display name                                                 |
-| `lat`   | number   | decimal latitude  (for nearest-first sorting)                |
-| `lng`   | number   | decimal longitude                                            |
-| `blurb` | string   | one-line summary on the card                                 |
-| `image` | string   | path to a photo or illustration                             |
-| `audio` | array    | one or more `{ label, file }`; the **first is the default** played |
+| field    | type   | notes                                                        |
+| -------- | ------ | ------------------------------------------------------------ |
+| `id`     | string | unique slug; **must match** `content/<id>.txt` and the audio filenames |
+| `name`   | string | display name                                                 |
+| `lat`    | number | decimal latitude (marker position)                           |
+| `lng`    | number | decimal longitude                                            |
+| `radius` | number | *optional* — metres; how close triggers the "you're here" arrival prompt (default 40) |
+| `blurb`  | string | one-line summary shown on the card                           |
+| `image`  | string | *optional* — path to a photo/illustration; omit for a plain title panel |
+| `audio`  | array  | *optional* — one or more `{ label, file }`; the **first is the default**. Omit and the card shows "narration coming soon" |
 
-## 7. Audio pipeline
+**Order = the numbered walk.** Stops are numbered (1, 2, 3 …) on both the map
+pins and the cards in the order they appear in `SITES`. Reorder the array to
+renumber the tour.
+
+`sites.js` also defines `const ROUTE = [[lat, lng], …]` — the ordered points of
+the walking route line drawn on the map (see the hidden `#trace` tool in
+`CLAUDE.md` for how it's captured).
+
+## 7. Narration & audio pipeline
+
+> **Quick answer — which voice is which:** **George** is Kokoro `bm_george`
+> (British **male**, the default `<id>.mp3`); **Emma** is `bf_emma` (British
+> **female**, `<id>-emma.mp3`). Full table below.
 
 **Engine:** [Kokoro](https://github.com/thewh1teagle/kokoro-onnx) — an open
 (Apache-2.0) neural TTS, run here via the ONNX runtime. Chosen over Piper for
@@ -127,10 +140,46 @@ What the script does (`tools/generate_audio.py`):
 - writes the default voice to `assets/audio/<id>.mp3` and extras to
   `assets/audio/<id>-<key>.mp3`.
 
-**Voices** are configured in the `VOICES` list at the top of the script. Current
-British options used: `bm_george` (default) and `bf_emma`. Other British voices
-in Kokoro include `bf_alice`, `bf_isabella`, `bf_lily`, `bm_daniel`, `bm_fable`,
-`bm_lewis`. Change the list, rerun, update the `audio` array in `sites.js`.
+### Voices
+
+Two British narrators are generated for every stop. The default (the bare
+`<id>.mp3` the app plays first) is **George**; the alternate is **Emma**.
+
+| App label  | Kokoro voice | Voice          | File              | Default |
+| ---------- | ------------ | -------------- | ----------------- | :-----: |
+| **George** | `bm_george`  | British male   | `<id>.mp3`        |    ✓    |
+| **Emma**   | `bf_emma`    | British female | `<id>-emma.mp3`   |         |
+
+Configured in the `VOICES` list at the top of `tools/generate_audio.py`. Other
+British Kokoro voices: `bf_alice`, `bf_isabella`, `bf_lily`, `bm_daniel`,
+`bm_fable`, `bm_lewis`. To change a voice: edit the list, rerun the generator,
+then update the matching `audio` array(s) in `sites.js`.
+
+### Per-stop narration style
+
+Both voices simply speak whatever the script says, so a stop's **character
+lives entirely in its `content/<id>.txt`** — edit the text and regenerate to
+retune it. The five original stops are narrated straight; the other eleven each
+take on a deliberate persona:
+
+| Stop                          | Style / persona                                  |
+| ----------------------------- | ------------------------------------------------ |
+| St Martin's Church            | Standard narration                               |
+| St Augustine's Abbey          | Standard narration                               |
+| Fyndon's Gate                 | Standard narration                               |
+| Canterbury Cathedral          | Standard narration                               |
+| Westgate Towers               | Standard narration                               |
+| Queen Bertha & King Ethelbert | Medieval town crier / herald                     |
+| City Walls                    | Roman legionary on guard duty                    |
+| The Marlowe Theatre           | Theatrical "luvvie"                              |
+| Solly's Orchard               | Dry, deadpan wit                                 |
+| Westgate Gardens              | Romantic nature poet                             |
+| River Tours                   | Salty old boatman                                |
+| Greyfriars Chapel             | Gentle Franciscan friar                          |
+| The Beaney                    | Excitable museum curator                         |
+| Roman Museum                  | Nerdy, over-caffeinated archaeologist            |
+| War Memorial                  | Solemn & sincere (deliberately plain, no comedy) |
+| St George's Tower             | First person — the tower itself (Blitz survivor) |
 
 ## 8. Images / illustration policy
 
@@ -152,9 +201,11 @@ in Kokoro include `bf_alice`, `bf_isabella`, `bf_lily`, `bm_daniel`, `bm_fable`,
 2. Write the narration in `content/westgate-towers.txt` (plain text; blank lines
    separate paragraphs and create slightly longer pauses).
 3. Run `python3 tools/generate_audio.py westgate-towers` → produces the MP3(s).
-4. Add an image to `assets/images/` (illustration or a properly-licensed photo).
-5. Append a block to `SITES` in `sites.js` with the coordinates, blurb, image
-   path, and the `audio` array.
+4. *(Optional)* add an image to `assets/images/` (illustration or a
+   properly-licensed photo); without one the card shows a plain title panel.
+5. Append a block to `SITES` in `sites.js` with the coordinates, blurb, the
+   `audio` array, and an optional `image`. Position the block where the stop
+   falls in the walk — array order sets its number.
 6. Serve locally (§10) and check it; commit and push.
 
 ## 10. Local development
