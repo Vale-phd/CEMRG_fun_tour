@@ -20,18 +20,21 @@ way, and exactly how to extend it.
 
 1. Someone shares the link (or a QR code) before the walk.
 2. On arrival at a site, the visitor opens the page.
-3. The browser asks for location once; the site list reorders so the **nearest
-   site floats to the top** and shows roughly how far away it is. If they
-   decline location, the full list is shown and they just tap the site they're
-   at.
-4. They press play and listen. A voice switcher lets them pick a narrator.
+3. The page opens to a **full-screen map** with the route and numbered stops.
+   The browser asks for location once; a live dot shows where they are and the
+   nearest stop within range pops an "arrival" prompt. Location is optional —
+   without it they just tap the stop they're standing at.
+4. Tapping a numbered stop (or the arrival prompt) **slides the map aside and
+   opens that stop's card** — docked to the right on wide screens, a bottom
+   sheet on phones. They press play and listen; a voice switcher picks the
+   narrator. Close (× or Esc) returns to the full-screen map.
 
 ## 3. Current status
 
-- **v1 ships one site: Canterbury Cathedral**, with two British narrator voices
+- **Live at https://vale-phd.github.io/CEMRG_fun_tour/** — a full-screen map
+  with **16 narrated stops**, each with two British narrator voices
   (George / Emma).
-- Everything is structured so adding the rest of the walk is data entry plus an
-  audio-generation step (see §9).
+- Adding more stops is data entry plus an audio-generation step (see §9).
 
 ## 4. Architecture & rationale
 
@@ -54,7 +57,7 @@ way, and exactly how to extend it.
 /
 ├── index.html                     # page shell
 ├── styles.css                     # mobile-first styling
-├── app.js                         # rendering, geolocation sort, voice switch
+├── app.js                         # map, slide-in detail panel, geolocation, voices
 ├── sites.js                       # TOUR DATA (the SITES array)  ← edit this
 ├── content/
 │   └── canterbury-cathedral.txt   # narration script (TTS input, 1 per site)
@@ -168,13 +171,16 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
 
 ## 11. Deployment (GitHub Pages)
 
-- Repo: `vale-phd/cemrg_fun_tour`. Development branch:
-  `claude/canterbury-tour-app-aXkYp`.
-- One-time: in **Settings → Pages**, set the source branch and `/` (root)
-  folder. The site then publishes at the URL GitHub shows there.
-- Generate a QR code for that URL for easy sharing on the day.
-- Note: Pages serves whatever branch you point it at — decide whether to publish
-  from the dev branch or merge to `main` first.
+- **Live URL:** https://vale-phd.github.io/CEMRG_fun_tour/
+- Deploys **automatically** via GitHub Actions (`.github/workflows/pages.yml`)
+  on every push to the default branch `claude/canterbury-tour-app-aXkYp`. The
+  workflow enables Pages on its first run; the first build takes ~1–2 minutes.
+- To ship a change: merge it into `claude/canterbury-tour-app-aXkYp` and push.
+- Generate a QR code for the live URL for easy sharing on the day.
+- **Note:** you can't open the live URL (or load map tiles) from the Claude Code
+  web sandbox — its network is locked down and returns 403/blank regardless of
+  the real status. Verify in a real browser, or test the UI headlessly (see
+  `CLAUDE.md`).
 
 ## 12. Roadmap / future enhancements
 
@@ -204,6 +210,11 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
 - **Online-only in v1.** Simplicity first; offline is a known future step.
 - **SVG illustration in v1.** Copyright-clean and unblocked by the network
   policy; real photos are an easy later swap.
+- **Map-first interface.** The map is the browser: full-screen, with the
+  per-stop cards shown on demand in a slide-in panel (docked right on desktop, a
+  bottom sheet on phones) instead of a scrolling list. It reuses the existing
+  card + voice-switcher markup; geolocation now drives the live dot, the arrival
+  prompt, and the open card's distance rather than reordering a list.
 
 ## 14. Content accuracy
 
