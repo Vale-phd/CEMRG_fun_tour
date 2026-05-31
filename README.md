@@ -6,8 +6,8 @@ history. No app install, no accounts.
 
 A full-screen map shows the route and **16 numbered stops**; tap one to open its
 card and listen. Every stop has two British narrator voices — **George** and
-**Emma** — and many are voiced in a playful persona (Roman soldier, friar,
-theatrical luvvie, …). It's built so adding more sites is mostly data entry —
+**Lily** — and each narration grounds itself in a real detail you can see on
+the spot. It's built so adding more sites is mostly data entry —
 see [`SPEC.md`](SPEC.md).
 
 ## Run it locally
@@ -19,8 +19,8 @@ python3 -m http.server 8000
 
 ## Add a site / regenerate audio
 
-See [`SPEC.md`](SPEC.md) §7 (narration & audio — incl. the **George/Emma voice
-table** and per-stop personas) and §9 (adding a site). In short: write
+See [`SPEC.md`](SPEC.md) §7 (narration & audio — incl. the **George/Lily voice
+table** and the narration style) and §9 (adding a site). In short: write
 `content/<id>.txt`, run `python3 tools/generate_audio.py <id>`, append an entry
 to `SITES` in `sites.js`, and add an image if you have one.
 
