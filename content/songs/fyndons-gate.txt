@@ -1,0 +1,40 @@
+# Theme song — Fyndon's Gate
+# Input for ACE-Step 1.5 (see SPEC.md "Song pipeline"). In the acestep UI,
+# paste the CAPTION into the tags/style box and everything under LYRICS into
+# the lyrics box; set length to DURATION. Edit freely, then regenerate.
+
+CAPTION:
+stately English processional folk, plucked lute, recorder, viol, soft hand drum, warm male baritone, mid-tempo and regal, 90 bpm
+
+DURATION: 100
+
+LYRICS:
+[Intro]
+Beneath the arch we stand
+
+[Verse 1]
+Abbot Fyndon built it tall,
+Flint and turret, battled wall.
+Seven hundred years it stood,
+A gate of stone and gate of wood.
+
+[Chorus]
+Pass beneath the great gate, pass below,
+Kings and pilgrims long ago.
+Crown and cradle, lock and key,
+Fyndon's Gate keeps memory.
+
+[Verse 2]
+Charles once waited for his bride,
+Henrietta at his side.
+Now the schoolboys come and go,
+Under arches that they know.
+
+[Chorus]
+Pass beneath the great gate, pass below,
+Kings and pilgrims long ago.
+Crown and cradle, lock and key,
+Fyndon's Gate keeps memory.
+
+[Outro]
+Pass below, and onward go.

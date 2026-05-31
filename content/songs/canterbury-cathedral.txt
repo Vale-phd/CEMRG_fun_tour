@@ -1,0 +1,40 @@
+# Theme song — Canterbury Cathedral
+# Input for ACE-Step 1.5 (see SPEC.md "Song pipeline"). In the acestep UI,
+# paste the CAPTION into the tags/style box and everything under LYRICS into
+# the lyrics box; set length to DURATION. Edit freely, then regenerate.
+
+CAPTION:
+grand English folk hymn, cathedral choir pads, pipe organ, lute and harp, soaring male and female harmonies, slow and majestic, long reverb, 72 bpm
+
+DURATION: 105
+
+LYRICS:
+[Intro]
+Bells over Canterbury ring
+
+[Verse 1]
+Fourteen hundred years of prayer,
+Augustine raised a throne to share.
+Stone upon stone the towers climb,
+Bell Harry crowns the weight of time.
+
+[Chorus]
+Walk where the pilgrims came to kneel,
+Under the vaults where the candles steal.
+Sing for the saint and the martyr's name,
+Canterbury, ever the same.
+
+[Verse 2]
+Becket fell by the altar stair,
+Four knights' shadows in the air.
+The world wept loud for the murdered priest,
+Pilgrims streamed from west and east.
+
+[Chorus]
+Walk where the pilgrims came to kneel,
+Under the vaults where the candles steal.
+Sing for the saint and the martyr's name,
+Canterbury, ever the same.
+
+[Outro]
+One small candle, burning still.

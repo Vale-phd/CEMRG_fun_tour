@@ -1,0 +1,34 @@
+# Theme song — St Martin's Church
+# Input for ACE-Step 1.5 (see SPEC.md "Song pipeline"). In the acestep UI,
+# paste the CAPTION into the tags/style box and everything under LYRICS into
+# the lyrics box; set length to DURATION. Edit freely, then regenerate.
+
+CAPTION:
+ancient gentle English folk, fingerpicked lute, soft hand percussion, intimate warm female voice, tender and candlelit, 76 bpm
+
+DURATION: 95
+
+LYRICS:
+[Intro]
+Older than the names we know
+
+[Verse 1]
+Roman bricks in a humble wall,
+The smallest church, the tallest tale.
+Bertha came with her quiet faith,
+Lit a candle, kept it safe.
+
+[Chorus]
+Here it started, here it began,
+Long before the English ran.
+Sing for the chapel that holds the door,
+Where the whole long story tore.
+
+[Verse 2]
+Augustine found a church to keep,
+Waters blessed and converts deep.
+Fifteen hundred years of grace,
+Still alive in this small place.
+
+[Outro]
+Still a candle, still a prayer.

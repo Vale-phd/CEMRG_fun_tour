@@ -167,6 +167,10 @@
       soon.textContent = "Narration coming soon";
       body.appendChild(soon);
     }
+
+    if (site.song && site.song.file) {
+      body.appendChild(buildSong(site.song));
+    }
     li.appendChild(body);
 
     li._distEl = dist;
@@ -200,6 +204,25 @@
       });
       wrap.appendChild(btn);
     });
+    return wrap;
+  }
+
+  function buildSong(song) {
+    const wrap = document.createElement("div");
+    wrap.className = "song";
+
+    const label = document.createElement("span");
+    label.className = "song__label";
+    label.textContent = song.title ? "Song · " + song.title : "Theme song";
+    wrap.appendChild(label);
+
+    const audio = document.createElement("audio");
+    audio.controls = true;
+    audio.preload = "metadata";
+    audio.className = "song__audio";
+    audio.src = song.file;
+    audio.addEventListener("error", () => wrap.remove());
+    wrap.appendChild(audio);
     return wrap;
   }
 
