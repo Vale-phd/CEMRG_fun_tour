@@ -16,6 +16,9 @@
  *   blurb   one-line summary shown on the card
  *   image   optional path to an image; omit for a plain card
  *   audio   optional array of voice options; the first plays by default
+ *   songs   optional array of style remixes ({ label, file }); the label is the
+ *           musical style (e.g. "Folk", "K-pop"). Surfaced behind the card's
+ *           "Songs" button. See SPEC.md §7 "Location songs".
  *
  * Stops are numbered on the map in this array's order (the walking order).
  */
@@ -33,6 +36,9 @@ const SITES = [
       { label: "George", file: "assets/audio/st-martins-church.mp3" },
       { label: "Lily", file: "assets/audio/st-martins-church-lily.mp3" },
     ],
+    songs: [
+      { label: "Lo-fi", file: "assets/songs/st-martins-church-lofi.mp3" },
+    ],
   },
   {
     id: "st-augustines-abbey",
@@ -47,6 +53,9 @@ const SITES = [
       { label: "George", file: "assets/audio/st-augustines-abbey.mp3" },
       { label: "Lily", file: "assets/audio/st-augustines-abbey-lily.mp3" },
     ],
+    songs: [
+      { label: "Opera", file: "assets/songs/st-augustines-abbey-opera.mp3" },
+    ],
   },
   {
     id: "fyndons-gate",
@@ -60,6 +69,11 @@ const SITES = [
     audio: [
       { label: "George", file: "assets/audio/fyndons-gate.mp3" },
       { label: "Lily", file: "assets/audio/fyndons-gate-lily.mp3" },
+    ],
+    songs: [
+      { label: "Folk", file: "assets/songs/fyndons-gate-folk.mp3" },
+      { label: "K-pop", file: "assets/songs/fyndons-gate-kpop.mp3" },
+      { label: "French", file: "assets/songs/fyndons-gate-french.mp3" },
     ],
   },
   {
@@ -126,6 +140,9 @@ const SITES = [
       { label: "George", file: "assets/audio/westgate-towers.mp3" },
       { label: "Lily", file: "assets/audio/westgate-towers-lily.mp3" },
     ],
+    songs: [
+      { label: "EDM", file: "assets/songs/westgate-towers-edm.mp3" },
+    ],
   },
   {
     id: "river-tours",
@@ -189,6 +206,9 @@ const SITES = [
     audio: [
       { label: "George", file: "assets/audio/canterbury-cathedral.mp3" },
       { label: "Lily", file: "assets/audio/canterbury-cathedral-lily.mp3" },
+    ],
+    songs: [
+      { label: "Folk", file: "assets/songs/canterbury-cathedral-folk.mp3" },
     ],
   },
   {

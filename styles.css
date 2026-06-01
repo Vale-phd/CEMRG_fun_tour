@@ -448,7 +448,7 @@ body {
   display: none;
 }
 
-/* the swipe handle, floating Finish, and inline Finish are mobile-only */
+/* the swipe handle and the floating Finish pill are mobile-only */
 .detail__toggle {
   display: none;
 }
@@ -457,8 +457,53 @@ body {
   display: none;
 }
 
+/* actions row: Finish + Songs. Shown on every screen size so the laptop and
+   the phone offer the same controls (the phone adds the floating Finish only
+   when the sheet is collapsed). */
+.card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
 .voice-finish {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.song-toggle.is-open {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* the song player + style switcher, revealed by the "Songs" button */
+.songs {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--line);
+}
+
+.songs[hidden] {
   display: none;
+}
+
+.songs__styles {
+  margin-bottom: 0.55rem;
+}
+
+.songs__single {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.songs audio {
+  width: 100%;
+  height: 40px;
 }
 
 @media (max-width: 700px) {
@@ -553,11 +598,14 @@ body {
     transform: rotate(180deg);
   }
 
-  /* collapsed: show only the title + the player, for a bigger map */
+  /* collapsed: show only the title + the narration player, for a bigger map
+     (Finish stays reachable via the floating pill below) */
   .app.detail-collapsed .card__media,
   .app.detail-collapsed .card__blurb,
   .app.detail-collapsed .card__soon,
-  .app.detail-collapsed .voices {
+  .app.detail-collapsed .voices,
+  .app.detail-collapsed .card__actions,
+  .app.detail-collapsed .songs {
     display: none;
   }
 
@@ -573,16 +621,8 @@ body {
     text-overflow: ellipsis;
   }
 
-  /* "Finish" sits next to the Lily button while the sheet is up */
-  .voice-finish {
-    display: inline-block;
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-    font-weight: 600;
-  }
-
-  /* and floats just above the sheet while it is down — clear of the handle chip */
+  /* Finish floats just above the sheet while it is collapsed — clear of the
+     handle chip (the inline Finish in .card__actions is hidden when collapsed) */
   .app.detail-collapsed ~ .finish-float {
     display: inline-flex;
     align-items: center;

@@ -4,6 +4,9 @@
 - Narration synthesised with **Kokoro** TTS (Apache-2.0),
   https://github.com/thewh1teagle/kokoro-onnx — British voices `bm_george`
   and `bf_lily`. Scripts in `content/` are this project's own writing.
+- **Songs** (`assets/songs/`) are AI-generated music remixes per stop, one per
+  style. _TODO: confirm and record the generator + its licence/terms before
+  relying on these publicly._
 
 ## Images
 - `assets/images/canterbury-cathedral.svg` — original illustration created for

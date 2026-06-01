@@ -126,8 +126,7 @@
 
   function closeDetail() {
     if (activeIndex === -1) return;
-    const audio = cards[activeIndex].querySelector("audio");
-    if (audio) audio.pause();
+    cards[activeIndex].querySelectorAll("audio").forEach((audio) => audio.pause());
     setActiveMarker(-1);
     appEl.classList.remove("detail-open");
     setCollapsed(false);
@@ -150,8 +149,9 @@
   function pauseAudioExcept(index) {
     cards.forEach((card, i) => {
       if (i === index) return;
-      const audio = card.querySelector("audio");
-      if (audio && !audio.paused) audio.pause();
+      card.querySelectorAll("audio").forEach((audio) => {
+        if (!audio.paused) audio.pause();
+      });
     });
   }
 
@@ -250,15 +250,16 @@
     blurb.textContent = site.blurb;
     body.appendChild(blurb);
 
+    let narrationAudio = null;
     if (site.audio && site.audio.length) {
-      const audio = document.createElement("audio");
-      audio.controls = true;
-      audio.preload = "none";
-      audio.src = site.audio[0].file;
+      narrationAudio = document.createElement("audio");
+      narrationAudio.controls = true;
+      narrationAudio.preload = "none";
+      narrationAudio.src = site.audio[0].file;
       if (site.audio.length > 1) {
-        body.appendChild(buildVoiceSwitcher(site, audio));
+        body.appendChild(buildVoiceSwitcher(site, narrationAudio));
       }
-      body.appendChild(audio);
+      body.appendChild(narrationAudio);
     } else {
       const soon = document.createElement("p");
       soon.className = "card__soon";
@@ -266,20 +267,46 @@
       body.appendChild(soon);
     }
 
-    // "Finish" — closes the sheet and brings the map instructions back (mobile)
+    // Actions row: "Finish" plus, when the stop has songs, a "Songs" toggle to
+    // its right. Shown on every screen size so desktop and mobile match.
+    const actions = document.createElement("div");
+    actions.className = "card__actions";
+
     const finishBtn = document.createElement("button");
     finishBtn.type = "button";
     finishBtn.className = "voice-btn voice-finish";
     finishBtn.textContent = "Finish";
     finishBtn.addEventListener("click", closeDetail);
-    const voicesRow = body.querySelector(".voices");
-    if (voicesRow) {
-      voicesRow.appendChild(finishBtn);
-    } else {
-      const actions = document.createElement("div");
-      actions.className = "voices card__actions";
-      actions.appendChild(finishBtn);
-      body.appendChild(actions);
+    actions.appendChild(finishBtn);
+
+    let songPanel = null;
+    if (site.songs && site.songs.length) {
+      songPanel = buildSongs(site);
+
+      const songsBtn = document.createElement("button");
+      songsBtn.type = "button";
+      songsBtn.className = "voice-btn song-toggle";
+      songsBtn.innerHTML = '<span aria-hidden="true">♪</span> Songs';
+      songsBtn.setAttribute("aria-expanded", "false");
+      songsBtn.setAttribute("aria-controls", songPanel.id);
+      songsBtn.addEventListener("click", () => {
+        const willOpen = songPanel.hidden;
+        songPanel.hidden = !willOpen;
+        songsBtn.setAttribute("aria-expanded", String(willOpen));
+        songsBtn.classList.toggle("is-open", willOpen);
+      });
+      actions.appendChild(songsBtn);
+    }
+
+    body.appendChild(actions);
+    if (songPanel) body.appendChild(songPanel);
+
+    // Within one card, keep the narration and a song from playing over each
+    // other (pauseAudioExcept already handles overlap between different stops).
+    const songAudio = songPanel && songPanel.querySelector("audio");
+    if (narrationAudio && songAudio) {
+      narrationAudio.addEventListener("play", () => { if (!songAudio.paused) songAudio.pause(); });
+      songAudio.addEventListener("play", () => { if (!narrationAudio.paused) narrationAudio.pause(); });
     }
 
     li.appendChild(body);
@@ -315,6 +342,59 @@
       });
       wrap.appendChild(btn);
     });
+    return wrap;
+  }
+
+  // The collapsible "Songs" panel: a player plus, when a stop has more than one
+  // song, a style switcher (the button label is the musical style). Starts
+  // hidden; the card's "Songs" button toggles it. See SPEC.md §7.
+  function buildSongs(site) {
+    const wrap = document.createElement("div");
+    wrap.className = "songs";
+    wrap.id = "songs-" + site.id;
+    wrap.hidden = true;
+
+    const audio = document.createElement("audio");
+    audio.controls = true;
+    audio.preload = "none";
+    audio.src = site.songs[0].file;
+
+    if (site.songs.length > 1) {
+      const row = document.createElement("div");
+      row.className = "voices songs__styles";
+
+      const label = document.createElement("span");
+      label.className = "voice-label";
+      label.textContent = "Style:";
+      row.appendChild(label);
+
+      site.songs.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "voice-btn";
+        btn.textContent = opt.label;
+        btn.setAttribute("aria-pressed", String(i === 0));
+        btn.addEventListener("click", () => {
+          if (audio.src.endsWith(opt.file)) return;
+          const wasPlaying = !audio.paused && !audio.ended;
+          audio.src = opt.file;
+          audio.load();
+          row.querySelectorAll(".voice-btn").forEach((b) =>
+            b.setAttribute("aria-pressed", String(b === btn))
+          );
+          if (wasPlaying) audio.play().catch(() => {});
+        });
+        row.appendChild(btn);
+      });
+      wrap.appendChild(row);
+    } else {
+      const single = document.createElement("p");
+      single.className = "songs__single";
+      single.textContent = "Style: " + site.songs[0].label;
+      wrap.appendChild(single);
+    }
+
+    wrap.appendChild(audio);
     return wrap;
   }
 

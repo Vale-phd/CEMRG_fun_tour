@@ -64,18 +64,22 @@ all behind the `@media (max-width: 700px)` query.
   - **Visited stops:** `markVisited()` records opened stops in the `visited` set
     and adds `.stop-pin__n--visited` (green) to their pins — persists for the
     session, resets on reload (no `localStorage` yet).
-  - **Finish:** an inline "Finish" button (built into the card next to the voice
-    buttons) and the floating `#finishFloat` both just call `closeDetail()` —
-    returning to the map and bringing the `.map-overlay` instructions back.
+  - **Finish & Songs:** every card ends in a `.card__actions` row — a "Finish"
+    button plus, when the stop has songs, a "Songs" toggle to its right — shown
+    on **both** desktop and mobile (the consistency fix). Finish and the floating
+    `#finishFloat` (collapsed mobile sheet only) both call `closeDetail()`.
+    `buildSongs()` builds the collapsible song player + style switcher (see
+    "Songs" below).
   - Hidden `#trace` / `#poi` authoring tools: see "Hidden authoring tools" below.
 - `styles.css` — the panel animates `width` (desktop) / `height` (mobile bottom
   sheet) via the `.detail-open` class; `--panel-w` / `--panel-h` /
-  `--panel-h-collapsed` tune the sizes. The mobile collapse handle, inline
-  Finish, floating Finish, and the "hide `.map-overlay` while a stop is open"
-  rule all live in the `@media (max-width: 700px)` block — **mobile-only; desktop
-  keeps the × and the always-visible title pill.** The `#detailToggle` chip is
-  `position: fixed` and straddles the sheet's top edge so its background is the
-  map, not a white bar.
+  `--panel-h-collapsed` tune the sizes. The `.card__actions` row (Finish + Songs)
+  and the `.songs` panel show at **all** widths. The mobile collapse handle, the
+  floating Finish, the "hide `.map-overlay` while a stop is open" rule, and the
+  collapsed-sheet hiding of `.card__actions` / `.songs` all live in the
+  `@media (max-width: 700px)` block — desktop keeps the × and the always-visible
+  title pill. The `#detailToggle` chip is `position: fixed` and straddles the
+  sheet's top edge so its background is the map, not a white bar.
 
 ## Narration (voices & scripts)
 
@@ -123,6 +127,22 @@ warm container may already have `models/` and the deps — check before re-fetch
   it matches itself and never fires.
 - **You can't audition audio in here.** Send the MP3 to the user (or hand over the
   URL) to judge voice quality and whether a persona lands.
+
+## Songs (style remixes)
+
+Per-stop musical remixes behind the card's **Songs** button — full feature write-up
+in `SPEC.md` §7. Shipped files: `assets/songs/<id>-<style>.mp3` (committed), listed
+in each stop's `songs` array in `sites.js` (`label` = the style).
+
+- **Where to get more (source takes live OUTSIDE the repo):**
+  `~/Desktop/CEMRG_fun_tour/songs/` — raw AI-generated takes named
+  `NN-<location>-<style>-take{A,B}.mp3` (several styles/takes per location). To
+  ship one: copy the chosen take into `assets/songs/` and add a `{ label, file }`
+  entry (label = style) to that stop's `songs` array.
+- **Coverage:** only 5/16 stops have songs (St Martin's=Lo-fi, St Augustine's=Opera,
+  Fyndon's Gate=Folk/K-pop/French, Westgate Towers=EDM, Canterbury Cathedral=Folk)
+  — and the takes folder only covers those 5 locations, so the other 11 need
+  source music generated first.
 
 ## Hidden authoring tools (`#trace`, `#poi`)
 

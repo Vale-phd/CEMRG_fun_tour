@@ -27,21 +27,26 @@ way, and exactly how to extend it.
 4. Tapping a numbered stop (or the arrival prompt) **slides the map aside and
    opens that stop's card** — docked to the right on wide screens, a bottom
    sheet on phones. They press play and listen; a voice switcher picks the
-   narrator. Once opened, the stop's pin turns **green** so they can see where
-   they've been.
-5. **On phones** the sheet can be **collapsed** (a chevron handle on its top
-   edge) down to just the title + audio player, giving a bigger map while the
-   narration keeps playing; the handle flips to restore the full card. A
-   **Finish** button (next to the voice buttons when expanded, a floating pill
-   when collapsed) returns to the full-screen map and brings back the
-   instructions bubble. On wide screens the card stays docked and closes with ×
-   or Esc.
+   narrator. Some stops also offer **songs** — a **Songs** button (right of
+   Finish) reveals a player and, where there's more than one, a musical-style
+   switcher (§7). Once opened, the stop's pin turns **green** so they can see
+   where they've been.
+5. Every card has an actions row with a **Finish** button (and the **Songs**
+   button to its right when the stop has songs) — shown on **both** desktop and
+   phone so the two layouts match. **On phones** the sheet can additionally be
+   **collapsed** (a chevron handle on its top edge) down to just the title +
+   audio player, giving a bigger map while the narration keeps playing; the
+   handle flips to restore the full card, and while collapsed the actions row is
+   hidden in favour of a floating **Finish** pill. Finish (or, on wide screens,
+   the × / Esc) returns to the full-screen map and brings back the instructions
+   bubble.
 
 ## 3. Current status
 
 - **Live at https://vale-phd.github.io/CEMRG_fun_tour/** — a full-screen map
   with **16 narrated stops**, each with two British narrator voices
-  (George / Lily).
+  (George / Lily). **5 stops also have songs** (style remixes behind a Songs
+  button — see §7).
 - Adding more stops is data entry plus an audio-generation step (see §9).
 
 ## 4. Architecture & rationale
@@ -70,9 +75,11 @@ way, and exactly how to extend it.
 ├── content/
 │   └── canterbury-cathedral.txt   # narration script (TTS input, 1 per site)
 ├── assets/
-│   ├── audio/                     # generated MP3s (committed)
+│   ├── audio/                     # generated narration MP3s (committed)
 │   │   ├── canterbury-cathedral.mp3        # default voice (George)
 │   │   └── canterbury-cathedral-lily.mp3   # alternate voice (Lily)
+│   ├── songs/                     # per-stop song remixes (committed; see §7)
+│   │   └── canterbury-cathedral-folk.mp3   # <id>-<style>.mp3
 │   └── images/
 │       └── canterbury-cathedral.jpg        # illustration (1280px JPEG, 1 per site)
 ├── tools/
@@ -99,6 +106,7 @@ Each site object:
 | `blurb`  | string | one-line summary shown on the card                           |
 | `image`  | string | *optional* — path to a photo/illustration; omit for a plain title panel |
 | `audio`  | array  | *optional* — one or more `{ label, file }`; the **first is the default**. Omit and the card shows "narration coming soon" |
+| `songs`  | array  | *optional* — one or more `{ label, file }` musical remixes; `label` is the **style** (e.g. `"Folk"`, `"K-pop"`). Surfaced behind the card's **Songs** button. See §7 "Location songs". |
 
 **Order = the numbered walk.** Stops are numbered (1, 2, 3 …) on both the map
 pins and the cards in the order they appear in `SITES`. Reorder the array to
@@ -184,6 +192,36 @@ House style for every `content/<id>.txt`:
 The character of a stop lives entirely in its `content/<id>.txt`; edit the text
 and regenerate (above) to retune it.
 
+### Location songs (style remixes)
+
+Some stops also have **songs** — short musical pieces about that place, each in a
+different musical **style**. They are an optional bit of fun layered on top of
+the narration, not a replacement for it.
+
+- **Where they live:** `assets/songs/<id>-<style>.mp3` (committed, like the
+  narration). Listed per stop in the site's `songs` array in `sites.js`
+  (`{ label, file }`), where **`label` is the style** — the UI shows the label
+  verbatim so visitors know what they're getting (`"Folk"`, `"K-pop"`,
+  `"Opera"`, `"Lo-fi"`, `"EDM"`, `"French"`, …).
+- **In the UI:** a **Songs** button sits to the right of **Finish** in the
+  card's actions row (on **every** screen size — desktop and phone match). It
+  toggles a panel holding a player; when a stop has more than one song the panel
+  adds a **Style:** switcher (the same button pattern as the voice switcher).
+  Stops with no songs simply show no Songs button. Built by `buildSongs()` in
+  `app.js`; the narration and a song never play over each other (a per-card
+  guard plus the existing cross-stop `pauseAudioExcept`).
+- **On a collapsed mobile sheet** the actions row and the songs panel are hidden
+  (the sheet stays "title + narration player"); expand the sheet to reach them.
+- **Provenance:** these are AI-generated music tracks, not Kokoro TTS — they are
+  *not* produced by `tools/generate_audio.py`. To add or swap one, drop the MP3
+  in `assets/songs/` and add/point a `{ label, file }` entry in the stop's
+  `songs` array. Record the generator/licence in `CREDITS.md`.
+
+**Current coverage (5 of 16 stops):** St Martin's Church (Lo-fi), St Augustine's
+Abbey (Opera), Fyndon's Gate (Folk / K-pop / French), Westgate Towers (EDM),
+Canterbury Cathedral (Folk). The other 11 stops have no song yet — see the
+roadmap (§12).
+
 ## 8. Images / illustration policy
 
 - Each stop has its own illustration at `assets/images/<id>.jpg`, shown as the
@@ -247,6 +285,10 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
 
 - **More sites.** The walk currently has 16 stops; obvious additions include
   Eastbridge Hospital, Dane John Gardens, and King's School.
+- **Songs for the other 11 stops.** Only 5 of 16 stops have a song so far (§7);
+  the rest (Queen Bertha & King Ethelbert, City Walls, The Marlowe Theatre,
+  Solly's Orchard, River Tours, Westgate Gardens, Greyfriars Chapel, The Beaney,
+  War Memorial, Roman Museum, St George's Tower) have none yet.
 - **Transcripts** under each player (accessibility + noisy streets); reuse the
   `content/*.txt` scripts.
 - **Offline / PWA:** cache the page + assets so it runs with no signal (handy
@@ -290,6 +332,13 @@ deployed HTTPS site, but not over plain `http://<LAN-IP>`.
   green so visitors can see progress at a glance. Kept in memory (a `visited`
   set), not `localStorage` — simplest thing that helps during a single walk;
   persisting across reloads is a documented future step (§12).
+- **Songs behind one button, style as the label.** Song remixes are tucked
+  behind a collapsible **Songs** button (off by default) so they don't compete
+  with the narration player; the button label for each song is its musical
+  *style* so visitors know what they're choosing. The Finish + Songs actions row
+  was promoted to show on **desktop as well as mobile** (Finish was previously
+  phone-only) so the two layouts present the same controls — the original ask
+  was "keep the interfaces consistent." Reuses the voice-switcher markup.
 
 ## 14. Content accuracy
 
