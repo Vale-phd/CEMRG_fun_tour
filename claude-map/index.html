@@ -11,11 +11,18 @@
 
   .cm-chip {
     position: fixed; left: 12px; bottom: 24px; z-index: 1000;
-    max-width: 320px; padding: 10px 14px; border-radius: 12px;
+    max-width: 340px; padding: 10px 14px; border-radius: 12px;
     background: rgba(255, 255, 255, 0.95); box-shadow: 0 2px 10px rgba(0,0,0,.25);
     font: 14px/1.4 system-ui, sans-serif; color: #222;
   }
   .cm-chip small { color: #666; }
+  .cm-actions { margin-top: 6px; display: flex; gap: 10px; align-items: center; }
+  .cm-actions button {
+    border: 1px solid #1a73e8; background: #fff; color: #1a73e8;
+    border-radius: 8px; padding: 3px 10px; font: 600 12px system-ui, sans-serif;
+    cursor: pointer;
+  }
+  .cm-actions label { font: 12px system-ui, sans-serif; color: #555; }
 
   .cm-pin {
     display: flex; align-items: center; justify-content: center;
@@ -31,9 +38,15 @@
 <body>
 <div id="map"></div>
 <div class="cm-chip">
-  <strong>Canterbury walking loop</strong> — <span id="cmKm"></span> km, 16 stops<br />
-  <small>YHA &rarr; St Martin's &rarr; old town &rarr; YHA. Route hand-traced on the
-  OS grid from published National Grid references, plotted on OpenStreetMap.</small>
+  <strong>Canterbury walking loop</strong> — <span id="cmStatus">routing&hellip;</span><br />
+  <small id="cmDetail">Asking the OpenStreetMap walking router for the path
+  through all 16 stops&hellip;</small>
+  <div class="cm-actions">
+    <button id="cmCopy" hidden>Copy route JSON</button>
+    <label id="cmTraceWrap" hidden>
+      <input type="checkbox" id="cmTrace" /> show hand-trace v1
+    </label>
+  </div>
 </div>
 
 <script src="../vendor/leaflet/leaflet.js"></script>
@@ -45,12 +58,6 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
-  // Walking route, Google-Maps style: blue dots over a white casing.
-  L.polyline(TOUR_PATH, { color: "#fff", weight: 9, opacity: 0.9 }).addTo(map);
-  const line = L.polyline(TOUR_PATH, {
-    color: "#1a73e8", weight: 4.5, dashArray: "0.1 9", lineCap: "round",
-  }).addTo(map);
-
   function pin(html, extra) {
     return L.divIcon({
       className: "",
@@ -58,17 +65,81 @@
       iconSize: [26, 26], iconAnchor: [13, 13], popupAnchor: [0, -14],
     });
   }
-
   L.marker([TOUR_START.lat, TOUR_START.lng], { icon: pin("S", "cm-pin--start"), zIndexOffset: 500 })
     .addTo(map)
     .bindPopup(TOUR_START.name);
-
   for (const s of TOUR_STOPS) {
     L.marker([s.lat, s.lng], { icon: pin(s.n) }).addTo(map).bindPopup(s.n + ". " + s.name);
   }
 
-  document.getElementById("cmKm").textContent = TOUR_KM;
-  map.fitBounds(line.getBounds().pad(0.08));
+  // Walking route, Google-Maps style: blue dots over a white casing.
+  function draw(coords) {
+    L.polyline(coords, { color: "#fff", weight: 9, opacity: 0.9 }).addTo(map);
+    const line = L.polyline(coords, {
+      color: "#1a73e8", weight: 4.5, dashArray: "0.1 9", lineCap: "round",
+    }).addTo(map);
+    map.fitBounds(line.getBounds().pad(0.08));
+  }
+
+  // Destinations in walking order: start -> stops 1..16 -> start. The router
+  // (OSRM foot profile, the engine behind openstreetmap.org directions)
+  // computes how to get between them along the real path network — same idea
+  // as typing destinations into Google Maps.
+  const WAY = [
+    [TOUR_START.lat, TOUR_START.lng],
+    ...TOUR_STOPS.map((s) => [s.lat, s.lng]),
+    [TOUR_START.lat, TOUR_START.lng],
+  ];
+  const OSRM =
+    "https://routing.openstreetmap.de/routed-foot/route/v1/foot/" +
+    WAY.map((p) => p[1].toFixed(6) + "," + p[0].toFixed(6)).join(";") +
+    "?overview=full&geometries=geojson&steps=false";
+
+  const elStatus = document.getElementById("cmStatus");
+  const elDetail = document.getElementById("cmDetail");
+
+  fetch(OSRM)
+    .then((r) => r.json())
+    .then((d) => {
+      if (d.code !== "Ok" || !d.routes || !d.routes.length) throw new Error(d.code);
+      const route = d.routes[0];
+      const coords = route.geometry.coordinates.map((c) => [c[1], c[0]]);
+      draw(coords);
+      const km = (route.distance / 1000).toFixed(2);
+      elStatus.textContent = "live-routed, " + km + " km, 16 stops";
+      elDetail.textContent =
+        "Computed just now in your browser by the OpenStreetMap walking " +
+        "router (OSRM foot profile) through the 16 stops; zoom in to check " +
+        "it against the streets and paths.";
+
+      const btn = document.getElementById("cmCopy");
+      btn.hidden = false;
+      btn.onclick = () =>
+        navigator.clipboard
+          .writeText(JSON.stringify({ km: +km, coords: coords.map((p) => [+p[0].toFixed(6), +p[1].toFixed(6)]) }))
+          .then(() => (btn.textContent = "Copied — paste it to Claude"));
+
+      const wrap = document.getElementById("cmTraceWrap");
+      wrap.hidden = false;
+      let trace = null;
+      document.getElementById("cmTrace").onchange = (e) => {
+        if (e.target.checked) {
+          trace = L.polyline(TOUR_PATH, { color: "#777", weight: 3, dashArray: "6 6" }).addTo(map);
+        } else if (trace) {
+          map.removeLayer(trace);
+          trace = null;
+        }
+      };
+    })
+    .catch(() => {
+      draw(TOUR_PATH);
+      elStatus.textContent = "hand-traced fallback, " + TOUR_KM + " km";
+      elDetail.textContent =
+        "Live routing was unreachable from this network, so this is the v1 " +
+        "hand trace. Open the page from a normal connection to get the " +
+        "auto-routed line.";
+    });
+
   L.control.scale({ imperial: false }).addTo(map);
 </script>
 </body>

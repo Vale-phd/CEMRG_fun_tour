@@ -4,7 +4,24 @@ A from-scratch replica of the tour's walking map — interactive map only, no
 narration/history/songs — built **without looking at `../sites.js`**. Once on
 `main` it's served at `…/CEMRG_fun_tour/claude-map/`.
 
-## How it was made
+## How the route is computed (v2)
+
+The page no longer trusts the hand trace. On load it sends the 17 destinations
+(YHA → stops 1–16 → YHA) to the OpenStreetMap walking router
+(`routing.openstreetmap.de`, OSRM **foot** profile — the engine behind
+openstreetmap.org directions, which prefers footpaths and penalises big roads)
+and draws the geometry it returns, snapped to the real path network — the same
+"enter destinations, it calculates" logic as Google Maps. The chip shows
+**live-routed** + the computed distance; a *Copy route JSON* button exports the
+geometry so it can be frozen into `route-data.js`, and a checkbox overlays the
+old hand trace for comparison. If the router is unreachable (e.g. the dev
+sandbox) the page falls back to the v1 hand trace and says so.
+
+Cross-check on Google itself (9-waypoint URL limit ⇒ two legs): see the
+"Google Maps cross-check" links in the project conversation, built from the
+same stop coordinates.
+
+## How the stop pins were placed
 
 1. **Anchors, not copying:** each landmark was fixed from published OS National
    Grid references found by web search — Historic England listing NGRs
