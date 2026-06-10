@@ -1,0 +1,1278 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE route (5.57 km)",
+    "stroke": "#1a73e8",
+    "stroke-width": 4
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      1.090243,
+      51.272658
+     ],
+     [
+      1.089033,
+      51.273427
+     ],
+     [
+      1.08793,
+      51.274086
+     ],
+     [
+      1.087174,
+      51.274574
+     ],
+     [
+      1.087419,
+      51.275449
+     ],
+     [
+      1.087629,
+      51.276432
+     ],
+     [
+      1.087816,
+      51.277732
+     ],
+     [
+      1.08933,
+      51.277845
+     ],
+     [
+      1.091343,
+      51.277926
+     ],
+     [
+      1.093139,
+      51.277978
+     ],
+     [
+      1.093614,
+      51.278001
+     ],
+     [
+      1.093718,
+      51.278052
+     ],
+     [
+      1.093614,
+      51.278001
+     ],
+     [
+      1.093139,
+      51.277978
+     ],
+     [
+      1.091343,
+      51.277926
+     ],
+     [
+      1.08933,
+      51.277845
+     ],
+     [
+      1.088176,
+      51.277749
+     ],
+     [
+      1.088046,
+      51.27795
+     ],
+     [
+      1.088003,
+      51.277736
+     ],
+     [
+      1.087026,
+      51.277708
+     ],
+     [
+      1.085766,
+      51.277741
+     ],
+     [
+      1.086061,
+      51.278291
+     ],
+     [
+      1.086404,
+      51.278695
+     ],
+     [
+      1.086899,
+      51.279024
+     ],
+     [
+      1.085995,
+      51.279444
+     ],
+     [
+      1.084945,
+      51.279831
+     ],
+     [
+      1.084436,
+      51.280789
+     ],
+     [
+      1.083706,
+      51.281663
+     ],
+     [
+      1.082683,
+      51.282454
+     ],
+     [
+      1.081703,
+      51.282813
+     ],
+     [
+      1.081282,
+      51.282311
+     ],
+     [
+      1.081026,
+      51.281913
+     ],
+     [
+      1.080613,
+      51.281519
+     ],
+     [
+      1.079833,
+      51.281657
+     ],
+     [
+      1.079297,
+      51.281797
+     ],
+     [
+      1.078919,
+      51.281924
+     ],
+     [
+      1.07854,
+      51.282051
+     ],
+     [
+      1.077952,
+      51.282489
+     ],
+     [
+      1.077243,
+      51.282598
+     ],
+     [
+      1.076453,
+      51.282591
+     ],
+     [
+      1.076018,
+      51.28209
+     ],
+     [
+      1.075819,
+      51.281691
+     ],
+     [
+      1.075733,
+      51.281468
+     ],
+     [
+      1.075503,
+      51.281249
+     ],
+     [
+      1.07527,
+      51.280985
+     ],
+     [
+      1.075067,
+      51.280739
+     ],
+     [
+      1.07527,
+      51.280985
+     ],
+     [
+      1.075503,
+      51.281249
+     ],
+     [
+      1.075905,
+      51.281257
+     ],
+     [
+      1.07663,
+      51.28095
+     ],
+     [
+      1.0774,
+      51.28066
+     ],
+     [
+      1.078027,
+      51.280391
+     ],
+     [
+      1.078116,
+      51.280425
+     ],
+     [
+      1.078445,
+      51.2802
+     ],
+     [
+      1.078555,
+      51.279712
+     ],
+     [
+      1.078614,
+      51.279296
+     ],
+     [
+      1.077668,
+      51.279303
+     ],
+     [
+      1.076636,
+      51.279312
+     ],
+     [
+      1.077668,
+      51.279303
+     ],
+     [
+      1.078614,
+      51.279296
+     ],
+     [
+      1.078555,
+      51.279712
+     ],
+     [
+      1.078445,
+      51.2802
+     ],
+     [
+      1.078999,
+      51.279916
+     ],
+     [
+      1.079435,
+      51.279563
+     ],
+     [
+      1.079441,
+      51.279661
+     ],
+     [
+      1.079435,
+      51.279563
+     ],
+     [
+      1.080095,
+      51.27915
+     ],
+     [
+      1.080647,
+      51.27882
+     ],
+     [
+      1.081338,
+      51.278424
+     ],
+     [
+      1.081483,
+      51.278663
+     ],
+     [
+      1.081688,
+      51.278946
+     ],
+     [
+      1.081308,
+      51.279055
+     ],
+     [
+      1.080786,
+      51.279176
+     ],
+     [
+      1.081152,
+      51.279302
+     ],
+     [
+      1.082099,
+      51.279726
+     ],
+     [
+      1.081152,
+      51.279302
+     ],
+     [
+      1.081526,
+      51.279094
+     ],
+     [
+      1.082256,
+      51.278868
+     ],
+     [
+      1.08258,
+      51.278778
+     ],
+     [
+      1.082366,
+      51.27837
+     ],
+     [
+      1.082194,
+      51.277943
+     ],
+     [
+      1.082781,
+      51.277487
+     ],
+     [
+      1.082847,
+      51.277413
+     ],
+     [
+      1.0837,
+      51.276869
+     ],
+     [
+      1.084193,
+      51.276523
+     ],
+     [
+      1.085455,
+      51.275662
+     ],
+     [
+      1.0871,
+      51.27454
+     ],
+     [
+      1.087927,
+      51.274041
+     ],
+     [
+      1.08903,
+      51.273382
+     ],
+     [
+      1.090243,
+      51.272658
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL route (5.78 km)",
+    "stroke": "#e8710a",
+    "stroke-width": 4
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      1.092914,
+      51.270727
+     ],
+     [
+      1.089835,
+      51.273293
+     ],
+     [
+      1.090329,
+      51.273488
+     ],
+     [
+      1.091305,
+      51.274146
+     ],
+     [
+      1.091809,
+      51.27467
+     ],
+     [
+      1.092957,
+      51.275536
+     ],
+     [
+      1.093365,
+      51.275972
+     ],
+     [
+      1.094062,
+      51.276503
+     ],
+     [
+      1.09388,
+      51.276886
+     ],
+     [
+      1.093869,
+      51.277289
+     ],
+     [
+      1.092496,
+      51.277457
+     ],
+     [
+      1.090586,
+      51.277544
+     ],
+     [
+      1.089481,
+      51.277383
+     ],
+     [
+      1.088258,
+      51.277349
+     ],
+     [
+      1.08623,
+      51.277624
+     ],
+     [
+      1.086252,
+      51.277954
+     ],
+     [
+      1.086649,
+      51.27878
+     ],
+     [
+      1.086692,
+      51.279068
+     ],
+     [
+      1.08579,
+      51.279303
+     ],
+     [
+      1.085973,
+      51.27974
+     ],
+     [
+      1.085962,
+      51.28023
+     ],
+     [
+      1.085436,
+      51.281103
+     ],
+     [
+      1.083462,
+      51.282345
+     ],
+     [
+      1.08255,
+      51.281674
+     ],
+     [
+      1.0821,
+      51.281627
+     ],
+     [
+      1.081553,
+      51.281741
+     ],
+     [
+      1.081209,
+      51.281741
+     ],
+     [
+      1.080447,
+      51.281049
+     ],
+     [
+      1.079739,
+      51.280546
+     ],
+     [
+      1.079267,
+      51.280727
+     ],
+     [
+      1.07901,
+      51.280781
+     ],
+     [
+      1.079117,
+      51.281056
+     ],
+     [
+      1.079031,
+      51.281519
+     ],
+     [
+      1.078892,
+      51.281714
+     ],
+     [
+      1.078988,
+      51.281848
+     ],
+     [
+      1.079482,
+      51.282077
+     ],
+     [
+      1.079729,
+      51.282291
+     ],
+     [
+      1.079847,
+      51.282278
+     ],
+     [
+      1.079997,
+      51.282392
+     ],
+     [
+      1.080147,
+      51.282426
+     ],
+     [
+      1.080297,
+      51.282392
+     ],
+     [
+      1.080415,
+      51.282553
+     ],
+     [
+      1.079171,
+      51.282654
+     ],
+     [
+      1.079096,
+      51.282835
+     ],
+     [
+      1.078978,
+      51.282963
+     ],
+     [
+      1.077958,
+      51.282896
+     ],
+     [
+      1.077658,
+      51.282896
+     ],
+     [
+      1.07754,
+      51.282708
+     ],
+     [
+      1.076757,
+      51.282271
+     ],
+     [
+      1.075652,
+      51.281674
+     ],
+     [
+      1.075609,
+      51.281452
+     ],
+     [
+      1.074954,
+      51.281022
+     ],
+     [
+      1.074289,
+      51.280942
+     ],
+     [
+      1.073828,
+      51.280579
+     ],
+     [
+      1.073345,
+      51.280082
+     ],
+     [
+      1.074032,
+      51.279726
+     ],
+     [
+      1.073366,
+      51.279129
+     ],
+     [
+      1.07357,
+      51.279075
+     ],
+     [
+      1.073699,
+      51.27886
+     ],
+     [
+      1.07371,
+      51.278719
+     ],
+     [
+      1.07401,
+      51.278518
+     ],
+     [
+      1.074375,
+      51.278444
+     ],
+     [
+      1.074708,
+      51.278511
+     ],
+     [
+      1.074986,
+      51.278518
+     ],
+     [
+      1.075298,
+      51.278618
+     ],
+     [
+      1.075491,
+      51.278652
+     ],
+     [
+      1.075759,
+      51.278565
+     ],
+     [
+      1.075823,
+      51.278571
+     ],
+     [
+      1.075974,
+      51.278733
+     ],
+     [
+      1.076092,
+      51.278719
+     ],
+     [
+      1.076285,
+      51.2788
+     ],
+     [
+      1.076424,
+      51.2789
+     ],
+     [
+      1.077272,
+      51.278377
+     ],
+     [
+      1.077476,
+      51.27841
+     ],
+     [
+      1.077905,
+      51.278699
+     ],
+     [
+      1.078023,
+      51.278907
+     ],
+     [
+      1.078087,
+      51.279095
+     ],
+     [
+      1.078398,
+      51.279411
+     ],
+     [
+      1.078935,
+      51.279659
+     ],
+     [
+      1.080501,
+      51.278706
+     ],
+     [
+      1.081091,
+      51.279203
+     ],
+     [
+      1.083591,
+      51.27833
+     ],
+     [
+      1.082422,
+      51.277571
+     ],
+     [
+      1.082958,
+      51.277262
+     ],
+     [
+      1.083494,
+      51.277134
+     ],
+     [
+      1.083806,
+      51.277188
+     ],
+     [
+      1.083966,
+      51.277242
+     ],
+     [
+      1.084256,
+      51.277121
+     ],
+     [
+      1.084299,
+      51.276825
+     ],
+     [
+      1.085479,
+      51.276187
+     ],
+     [
+      1.086391,
+      51.275758
+     ],
+     [
+      1.086799,
+      51.275516
+     ],
+     [
+      1.087078,
+      51.275287
+     ],
+     [
+      1.087947,
+      51.274871
+     ],
+     [
+      1.088537,
+      51.274502
+     ],
+     [
+      1.088988,
+      51.274139
+     ],
+     [
+      1.089878,
+      51.273367
+     ],
+     [
+      1.092957,
+      51.270762
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 1. St Martin's Church",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.093718,
+     51.278052
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 2. St Augustine's Abbey",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.088046,
+     51.27795
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 3. Fyndon's Gate",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.086899,
+     51.279024
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 4. Queen Bertha & King Ethelbert",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.085995,
+     51.279444
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 5. City Walls",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.084871,
+     51.279788
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 6. The Marlowe Theatre",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.078919,
+     51.281924
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 7. Solly's Orchard",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.077952,
+     51.282489
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 8. Westgate Towers",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.075733,
+     51.281468
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 9. Westgate Gardens",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.075067,
+     51.280739
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 10. River Tours (King's Bridge)",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.078116,
+     51.280425
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 11. Greyfriars Chapel",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.076636,
+     51.279312
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 12. The Beaney",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.079441,
+     51.279661
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 13. Roman Museum",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.081483,
+     51.278663
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 14. War Memorial (Buttermarket)",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.080786,
+     51.279176
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 15. Canterbury Cathedral",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.082099,
+     51.279726
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE 16. St George's Tower",
+    "marker-color": "#1a73e8",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.082847,
+     51.277413
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "CLAUDE S. YHA start",
+    "marker-color": "#188038",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.090243,
+     51.272658
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 1. st-martins-church",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.093665,
+     51.278032
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 2. st-augustines-abbey",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.087786,
+     51.277615
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 3. fyndons-gate",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.086933,
+     51.279065
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 4. queen-bertha-king-ethelbert",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.086257,
+     51.279229
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 5. city-walls",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.085721,
+     51.279585
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 6. marlowe-theatre",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.078548,
+     51.281084
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 7. sollys-orchard",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.079155,
+     51.28188
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 8. westgate-towers",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.075791,
+     51.281538
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 9. river-tours",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.074772,
+     51.281306
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 10. westgate-gardens",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.073635,
+     51.280282
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 11. greyfriars-chapel",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.076746,
+     51.278959
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 12. the-beaney",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.079203,
+     51.279651
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 13. canterbury-cathedral",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.081209,
+     51.279107
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 14. war-memorial",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.081357,
+     51.279226
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 15. roman-museum",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.081469,
+     51.278643
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "ORIGINAL 16. st-georges-tower",
+    "marker-color": "#e8710a",
+    "marker-size": "small"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     1.082781,
+     51.277415
+    ]
+   }
+  }
+ ]
+}
