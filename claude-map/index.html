@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Canterbury Walking Loop — Claude's map</title>
+<link rel="stylesheet" href="../vendor/leaflet/leaflet.css" />
+<style>
+  html, body { height: 100%; margin: 0; }
+  #map { position: fixed; inset: 0; background: #e8e4dc; }
+
+  .cm-chip {
+    position: fixed; left: 12px; bottom: 24px; z-index: 1000;
+    max-width: 320px; padding: 10px 14px; border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95); box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    font: 14px/1.4 system-ui, sans-serif; color: #222;
+  }
+  .cm-chip small { color: #666; }
+
+  .cm-pin {
+    display: flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #1a4f8a; color: #fff; border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.5);
+    font: 700 13px/1 system-ui, sans-serif;
+  }
+  .cm-pin--start { background: #188038; }
+  .leaflet-popup-content { font: 600 14px/1.3 system-ui, sans-serif; margin: 10px 14px; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="cm-chip">
+  <strong>Canterbury walking loop</strong> — <span id="cmKm"></span> km, 16 stops<br />
+  <small>YHA &rarr; St Martin's &rarr; old town &rarr; YHA. Route hand-traced on the
+  OS grid from published National Grid references, plotted on OpenStreetMap.</small>
+</div>
+
+<script src="../vendor/leaflet/leaflet.js"></script>
+<script src="route-data.js"></script>
+<script>
+  const map = L.map("map", { zoomControl: true });
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  // Walking route, Google-Maps style: blue dots over a white casing.
+  L.polyline(TOUR_PATH, { color: "#fff", weight: 9, opacity: 0.9 }).addTo(map);
+  const line = L.polyline(TOUR_PATH, {
+    color: "#1a73e8", weight: 4.5, dashArray: "0.1 9", lineCap: "round",
+  }).addTo(map);
+
+  function pin(html, extra) {
+    return L.divIcon({
+      className: "",
+      html: '<div class="cm-pin ' + (extra || "") + '">' + html + "</div>",
+      iconSize: [26, 26], iconAnchor: [13, 13], popupAnchor: [0, -14],
+    });
+  }
+
+  L.marker([TOUR_START.lat, TOUR_START.lng], { icon: pin("S", "cm-pin--start"), zIndexOffset: 500 })
+    .addTo(map)
+    .bindPopup(TOUR_START.name);
+
+  for (const s of TOUR_STOPS) {
+    L.marker([s.lat, s.lng], { icon: pin(s.n) }).addTo(map).bindPopup(s.n + ". " + s.name);
+  }
+
+  document.getElementById("cmKm").textContent = TOUR_KM;
+  map.fitBounds(line.getBounds().pad(0.08));
+  L.control.scale({ imperial: false }).addTo(map);
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="687" viewBox="0 0 900 687" font-family="sans-serif">
+<rect width="900" height="687" fill="#f4f1ea"/>
+<polyline points="649.0,653.3 599.6,607.3 554.7,568.0 523.8,538.8 531.1,483.8 536.7,422.0 540.7,340.6 599.6,331.0 678.2,322.6 748.4,316.4 766.9,314.2 770.9,310.8 766.9,314.2 748.4,316.4 678.2,322.6 599.6,331.0 554.7,338.9 549.1,326.6 548.0,340.0 509.8,343.4 460.4,343.4 470.5,308.6 482.8,282.8 501.4,261.4 464.9,236.7 422.8,214.3 400.3,155.3 369.4,102.0 327.3,54.2 288.0,33.5 272.9,65.5 263.9,90.7 248.7,116.0 217.8,108.7 196.5,100.8 181.3,93.6 166.2,86.3 142.0,59.9 114.0,54.2 83.1,55.9 67.4,87.9 60.6,113.2 57.8,127.2 49.4,141.3 41.0,158.1 33.7,173.8 41.0,158.1 49.4,141.3 65.1,140.2 94.3,158.1 125.2,175.0 150.5,190.7 153.8,188.4 167.3,201.9 172.9,232.2 176.3,258.1 139.2,259.2 98.8,260.3 139.2,259.2 176.3,258.1 172.9,232.2 167.3,201.9 189.8,218.8 207.7,240.1 207.7,233.9 207.7,240.1 234.7,264.8 257.1,284.4 285.2,308.0 290.3,292.9 297.6,274.9 282.4,268.7 261.6,262.0 275.7,253.6 311.6,225.5 275.7,253.6 290.8,265.9 320.0,278.8 332.9,283.9 325.6,309.7 320.0,336.7 344.2,364.2 347.0,368.7 381.8,401.2 402.0,422.0 453.6,473.7 521.0,541.0 554.7,570.8 599.6,610.1 649.0,653.3" fill="none" stroke="#1a73e8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1 7"/>
+<circle cx="649.0" cy="653.3" r="9" fill="#188038"/>
+<text x="649.0" y="657.3" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">S</text>
+<circle cx="770.9" cy="310.8" r="9" fill="#1a4f8a"/>
+<text x="770.9" y="314.8" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">1</text>
+<text x="782.9" y="314.8" fill="#333" font-size="11">St Martin's Church</text>
+<circle cx="549.1" cy="326.6" r="9" fill="#1a4f8a"/>
+<text x="549.1" y="330.6" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">2</text>
+<text x="561.1" y="330.6" fill="#333" font-size="11">St Augustine's Abbey</text>
+<circle cx="501.4" cy="261.4" r="9" fill="#1a4f8a"/>
+<text x="501.4" y="265.4" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">3</text>
+<text x="513.4" y="265.4" fill="#333" font-size="11">Fyndon's Gate</text>
+<circle cx="464.9" cy="236.7" r="9" fill="#1a4f8a"/>
+<text x="464.9" y="240.7" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">4</text>
+<text x="476.9" y="240.7" fill="#333" font-size="11">Queen Bertha &amp; King Ethelbert</text>
+<circle cx="420.0" cy="217.1" r="9" fill="#1a4f8a"/>
+<text x="420.0" y="221.1" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">5</text>
+<text x="432.0" y="221.1" fill="#333" font-size="11">City Walls</text>
+<circle cx="181.3" cy="93.6" r="9" fill="#1a4f8a"/>
+<text x="181.3" y="97.6" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">6</text>
+<text x="193.3" y="97.6" fill="#333" font-size="11">The Marlowe Theatre</text>
+<circle cx="142.0" cy="59.9" r="9" fill="#1a4f8a"/>
+<text x="142.0" y="63.9" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">7</text>
+<text x="154.0" y="63.9" fill="#333" font-size="11">Solly's Orchard</text>
+<circle cx="57.8" cy="127.2" r="9" fill="#1a4f8a"/>
+<text x="57.8" y="131.2" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">8</text>
+<text x="69.8" y="131.2" fill="#333" font-size="11">Westgate Towers</text>
+<circle cx="33.7" cy="173.8" r="9" fill="#1a4f8a"/>
+<text x="33.7" y="177.8" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">9</text>
+<text x="45.7" y="177.8" fill="#333" font-size="11">Westgate Gardens</text>
+<circle cx="153.8" cy="188.4" r="9" fill="#1a4f8a"/>
+<text x="153.8" y="192.4" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">10</text>
+<text x="165.8" y="192.4" fill="#333" font-size="11">River Tours (King's Bridge)</text>
+<circle cx="98.8" cy="260.3" r="9" fill="#1a4f8a"/>
+<text x="98.8" y="264.3" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">11</text>
+<text x="110.8" y="264.3" fill="#333" font-size="11">Greyfriars Chapel</text>
+<circle cx="207.7" cy="233.9" r="9" fill="#1a4f8a"/>
+<text x="207.7" y="237.9" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">12</text>
+<text x="219.7" y="237.9" fill="#333" font-size="11">The Beaney</text>
+<circle cx="290.3" cy="292.9" r="9" fill="#1a4f8a"/>
+<text x="290.3" y="296.9" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">13</text>
+<text x="302.3" y="296.9" fill="#333" font-size="11">Roman Museum</text>
+<circle cx="261.6" cy="262.0" r="9" fill="#1a4f8a"/>
+<text x="261.6" y="266.0" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">14</text>
+<text x="273.6" y="266.0" fill="#333" font-size="11">War Memorial (Buttermarket)</text>
+<circle cx="311.6" cy="225.5" r="9" fill="#1a4f8a"/>
+<text x="311.6" y="229.5" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">15</text>
+<text x="323.6" y="229.5" fill="#333" font-size="11">Canterbury Cathedral</text>
+<circle cx="347.0" cy="368.7" r="9" fill="#1a4f8a"/>
+<text x="347.0" y="372.7" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">16</text>
+<text x="359.0" y="372.7" fill="#333" font-size="11">St George's Tower</text>
+<text x="16" y="671" font-size="14" fill="#333">Canterbury walking loop — 5.57 km, 16 stops (north up)</text>
+</svg>
