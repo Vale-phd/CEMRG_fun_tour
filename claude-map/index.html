@@ -44,7 +44,7 @@
   <div class="cm-actions">
     <button id="cmCopy" hidden>Copy route JSON</button>
     <label id="cmTraceWrap" hidden>
-      <input type="checkbox" id="cmTrace" /> show hand-trace v1
+      <input type="checkbox" id="cmTrace" /> show pre-computed line
     </label>
   </div>
 </div>
@@ -133,11 +133,11 @@
     })
     .catch(() => {
       draw(TOUR_PATH);
-      elStatus.textContent = "hand-traced fallback, " + TOUR_KM + " km";
+      elStatus.textContent = "street-routed fallback, " + TOUR_KM + " km";
       elDetail.textContent =
-        "Live routing was unreachable from this network, so this is the v1 " +
-        "hand trace. Open the page from a normal connection to get the " +
-        "auto-routed line.";
+        "Live routing was unreachable from this network, so this is the " +
+        "pre-computed street route (least-cost path over the road raster). " +
+        "Open the page from a normal connection for live routing.";
     });
 
   L.control.scale({ imperial: false }).addTo(map);

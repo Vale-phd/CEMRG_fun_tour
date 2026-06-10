@@ -44,3 +44,14 @@ Regenerate after edits: `pip install pyproj && python3 build_route.py`.
 Known honest limits: pins on 1 m listing NGRs are near-exact; corner points in
 between are knowledge-traced (±20–50 m), so the line may cut the odd corner —
 that's the hand-trace, not the anchors.
+
+## v3 — the route is now computed, not drawn
+
+`pixel_route.py` routes the tour over the road pixels of a stitched Google
+street basemap (the keyless `maps/vt` tiles): road/park/water/pedestrian
+classes become a cost surface, water is blocked off-bridge, the handful of
+pedestrian lanes Google paints like buildings are declared walkable, and the
+walking loop is the chained least-cost path through the 16 stops (original
+tour order, pins = verified NGRs + ground-truth corrections). Verified leg by
+leg against the rendered streets; `compare.kml` overlays this computed tour
+and the original hand-drawn one for import into Google My Maps.
