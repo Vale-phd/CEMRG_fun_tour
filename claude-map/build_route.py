@@ -140,6 +140,48 @@ js = (
 with open("route-data.js", "w") as f:
     f.write(js)
 
+# GeoJSON (GitHub renders this as a zoomable map on real tiles).
+gj = {"type": "FeatureCollection", "features": [
+    {"type": "Feature",
+     "properties": {"name": f"Walking route — {km} km", "stroke": "#1a73e8",
+                    "stroke-width": 4, "stroke-opacity": 0.9},
+     "geometry": {"type": "LineString",
+                  "coordinates": [[lng, lat] for lat, lng in path]}},
+    {"type": "Feature",
+     "properties": {"name": start["name"], "marker-color": "#188038",
+                    "marker-symbol": "s"},
+     "geometry": {"type": "Point", "coordinates": [start["lng"], start["lat"]]}},
+]}
+for s in stops:
+    props = {"name": f"{s['n']}. {s['name']}", "marker-color": "#1a4f8a"}
+    if s["n"] <= 9:
+        props["marker-symbol"] = str(s["n"])
+    gj["features"].append({"type": "Feature", "properties": props,
+                           "geometry": {"type": "Point",
+                                        "coordinates": [s["lng"], s["lat"]]}})
+with open("route.geojson", "w") as f:
+    json.dump(gj, f, indent=1)
+
+# KML for Google My Maps / Google Earth verification on Google imagery.
+kml = ['<?xml version="1.0" encoding="UTF-8"?>',
+       '<kml xmlns="http://www.opengis.net/kml/2.2"><Document>',
+       f'<name>Canterbury walking loop — {km} km, 16 stops</name>',
+       '<Style id="walk"><LineStyle><color>ffe8731a</color><width>4</width>'
+       '</LineStyle></Style>',
+       '<Placemark><name>Walking route</name><styleUrl>#walk</styleUrl>'
+       '<LineString><tessellate>1</tessellate><coordinates>',
+       " ".join(f"{lng},{lat},0" for lat, lng in path),
+       '</coordinates></LineString></Placemark>',
+       f'<Placemark><name>S. {escape(start["name"])}</name><Point><coordinates>'
+       f'{start["lng"]},{start["lat"]},0</coordinates></Point></Placemark>']
+for s in stops:
+    kml.append(f'<Placemark><name>{s["n"]}. {escape(s["name"])}</name>'
+               f'<Point><coordinates>{s["lng"]},{s["lat"]},0</coordinates>'
+               '</Point></Placemark>')
+kml.append('</Document></kml>')
+with open("route.kml", "w") as f:
+    f.write("\n".join(kml))
+
 # SVG preview (OS grid, north up) so the shape can be checked without tiles.
 xs = [e for e, n in PATH_EN]; ys = [n for e, n in PATH_EN]
 x0, y0, x1, y1 = min(xs) - 60, min(ys) - 60, max(xs) + 230, max(ys) + 60
